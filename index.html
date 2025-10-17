@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎰 Monster Kozmic Casino - ULTIMATE COMEDY EDITION 🎭</title>
+<title>🎰 Monster Kozmic Casino - PARTY MODE v2.0 🎭</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r169/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -25,6 +26,43 @@ body {
   66.66% { background-position: 66% 80%; filter: hue-rotate(240deg); }
   83.33% { background-position: 83% 40%; filter: hue-rotate(300deg); }
   100% { background-position: 100% 50%; filter: hue-rotate(360deg); }
+}
+
+body.shake {
+  animation: screenShake 0.5s ease-in-out;
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-5px, -5px) rotate(-1deg); }
+  20% { transform: translate(5px, 5px) rotate(1deg); }
+  30% { transform: translate(-5px, 5px) rotate(-1deg); }
+  40% { transform: translate(5px, -5px) rotate(1deg); }
+  50% { transform: translate(-5px, -5px) rotate(-1deg); }
+  60% { transform: translate(5px, 5px) rotate(1deg); }
+  70% { transform: translate(-5px, 5px) rotate(-1deg); }
+  80% { transform: translate(5px, -5px) rotate(1deg); }
+  90% { transform: translate(-5px, -5px) rotate(-1deg); }
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  z-index: 9999;
+  pointer-events: none;
+  animation: confettiFall 3s ease-out forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 .header {
@@ -58,6 +96,33 @@ body {
 @keyframes titlePulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
+}
+
+.audio-controls {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 10001;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #ff6b9d;
+}
+
+.audio-controls button {
+  background: linear-gradient(135deg, #ff6b9d, #4ecdc4);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 12px;
+}
+
+.volume-slider {
+  width: 100px;
+  margin: 5px;
 }
 
 .cosmic-event-banner {
@@ -319,7 +384,6 @@ body {
 
 .btn:active {
   transform: translateY(-2px) scale(1.02);
-  animation: btnShockwave 0.6s ease-out;
 }
 
 .btn.spin-btn {
@@ -354,11 +418,15 @@ body {
   color: #ffd700;
   text-align: center;
   margin: 20px 0;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-  background: rgba(0, 0, 0, 0.5);
   padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 15px;
   border: 2px solid #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
 }
@@ -376,6 +444,35 @@ body {
   0% { left: -100%; }
   50% { left: 0%; }
   100% { left: 100%; }
+}
+
+.buzzed-ometer {
+  background: rgba(255, 20, 147, 0.2);
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #ff1493;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.buzzed-bar {
+  width: 100%;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.buzzed-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff00, #ffff00, #ff8c00, #ff0000);
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #000;
 }
 
 .mystery-nft-showcase {
@@ -479,6 +576,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   position: relative;
   overflow: hidden;
 }
@@ -517,6 +615,54 @@ body {
   opacity: 1;
 }
 
+#ageModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#ageContent {
+  background: linear-gradient(135deg, rgba(44, 44, 78, 0.98), rgba(20, 20, 40, 0.98));
+  padding: 50px;
+  border-radius: 20px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 50px rgba(255, 107, 157, 0.8);
+  border: 3px solid #ff6b9d;
+  max-width: 500px;
+}
+
+#ageContent h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #ff6b9d, #4ecdc4, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#ageContent p {
+  font-size: 1.3em;
+  margin-bottom: 30px;
+}
+
+#ageContent button {
+  margin: 10px;
+  padding: 15px 40px;
+  font-size: 1.1em;
+}
+
+.hidden {
+  display: none !important;
+}
+
 @media (max-width: 768px) {
   .container { grid-template-columns: 1fr; gap: 15px; padding: 15px; }
   .header h1 { font-size: 2.2em; }
@@ -529,17 +675,99 @@ body {
 </head>
 <body>
 
+<!-- Audio Controls -->
+<div class="audio-controls hidden" id="audioControls">
+  <button onclick="toggleMute()">🔊 Mute</button>
+  <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider" oninput="changeVolume(this.value)">
+  <div style="color: #ffd700; font-size: 12px;">Volume: <span id="volumeDisplay">50</span>%</div>
+</div>
+
+<!-- Age Verification Modal -->
+<div id="ageModal">
+  <div id="ageContent">
+    <h2>🎰 Age Verification 🎰</h2>
+    <p>This cosmic casino is for users 21 and over.</p>
+    <p>Are you at least 21 years old?</p>
+    <button class="btn" onclick="verifyAge(true)">Yes, I'm 21+</button>
+    <button class="btn" onclick="verifyAge(false)">No, I'm Under 21</button>
+  </div>
+</div>
+
 <div class="cosmic-event-banner" id="cosmicEventBanner">
   🌌 COSMIC EVENT: Loading Universe... 🌌
 </div>
 
-<div class="header">
+<div class="header hidden" id="headerSection">
   <h1>🎰 MONSTER KOZMIC CASINO 🎭</h1>
-  <p>🃏 <strong>ULTIMATE COMEDY EDITION</strong> - Where Reality Goes to Laugh 🃏</p>
-  <p style="font-size: 1.1em;">🎸 Professional Music • 🎰 Absurd Gambling • 🧠 Consciousness Drilling • 🤣 Maximum Comedy</p>
+  <p>🃏 <strong>PARTY MODE v2.0</strong> - Where Reality Goes to Get Buzzed 🃏</p>
+  <p style="font-size: 1.1em;">🔊 Enhanced Audio • 🍺 Cosmic Shots • 📸 Share Chaos • 💥 Screen Shake</p>
 </div>
 
-<div class="container">
+<div class="container hidden" id="casinoContent">
+  
+  <!-- COSMIC SHOTS TRACKER -->
+  <div class="module">
+    <h2>🍺 Cosmic Shots Tracker 🎲</h2>
+    <div class="buzzed-ometer">
+      <h3 style="color: #ff1493; margin-bottom: 10px;">BUZZED-OMETER™</h3>
+      <div class="buzzed-bar">
+        <div class="buzzed-fill" id="buzzedFill" style="width: 0%;">
+          <span id="buzzedLevel">Sober</span>
+        </div>
+      </div>
+      <div style="margin-top: 15px;">
+        <div style="font-size: 2em; color: #ffd700;">🍺 Shots: <span id="shotCount">0</span></div>
+      </div>
+    </div>
+    <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; margin: 15px 0;">
+      <div style="color: #4ecdc4; font-weight: bold; margin-bottom: 10px;">🎲 DRINKING RULES:</div>
+      <div style="color: #fff; line-height: 1.8;">
+        • Jackpot (3 of a kind) = Take a shot! 🍺<br>
+        • Enlightenment reached = Sip your drink 🧠<br>
+        • Reality breaks = Everyone drinks! 📺<br>
+        • Llama invasion = Group shot! 🦙<br>
+        • Sports bet win = Victory sip! 🏆
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <button class="btn comedy-btn" onclick="takeCosmicShot()">🍺 TAKE COSMIC SHOT 🍺</button>
+      <button class="btn" onclick="resetShots()">🔄 Reset Counter</button>
+    </div>
+    <div class="status" id="shotsStatus">
+      🍺 Shots Tracker: READY FOR PARTY!<br>
+      🎲 Current State: Sober (for now...)<br>
+      🎭 Party Level: Just getting started<br>
+      ⚡ Remember to drink responsibly!
+    </div>
+  </div>
+
+  <!-- SHARE YOUR CHAOS -->
+  <div class="module">
+    <h2>📸 Share Your Chaos 🌪️</h2>
+    <div style="background: rgba(138, 43, 226, 0.2); padding: 20px; border-radius: 15px; margin: 15px 0;">
+      <div style="color: #ffd700; font-size: 1.2em; margin-bottom: 15px;">📱 Capture This Madness!</div>
+      <div style="text-align: center; margin: 20px 0;">
+        <button class="btn comedy-btn" onclick="shareYourChaos()" style="font-size: 1.2em; padding: 20px 40px;">
+          📸 SCREENSHOT MY CHAOS! 📸
+        </button>
+      </div>
+      <div style="text-align: center; margin: 20px 0;">
+        <button class="btn" onclick="downloadFridgeGoofiness()">
+          🎨 DOWNLOAD FRIDGE GOOFINESS 🎨
+        </button>
+      </div>
+      <div style="color: #4ecdc4; font-size: 0.9em; text-align: center; margin-top: 10px;">
+        Generate a ridiculous report card for your fridge door!
+      </div>
+    </div>
+    <div class="status" id="shareStatus">
+      📸 Share System: READY TO MEME!<br>
+      🎨 Report Cards Generated: 0<br>
+      🌟 Your chaos awaits immortalization<br>
+      ⚡ Perfect for social media bragging!
+    </div>
+  </div>
+
   <!-- COSMIC SLOT MACHINE WITH SENTIENCE -->
   <div class="module">
     <h2>🎰 Sentient Slot Machine Supreme 🤖</h2>
@@ -564,9 +792,11 @@ body {
       <button class="btn" onclick="existentialCrisis()">💭 CRISIS</button>
     </div>
     <div class="prize-display" id="cosmicPrizeDisplay">
-      🌟 Welcome to the comedy zone! Spin for ridiculous rewards! 🌟<br>
-      🎸🎸🎸 = Cosmic Guitar | 🎹🎹🎹 = Quantum Piano | 🥔🥔🥔 = Enlightened Potato<br>
-      🌟🌟🌟 = Supernova | 🤖🤖🤖 = SENTIENT MACHINE JACKPOT!
+      <div>🌟 Welcome to the party zone! Spin for ridiculous rewards! 🌟</div>
+      <div style="font-size: 0.8em; margin-top: 10px;">
+        🎸🎸🎸 = Cosmic Guitar | 🎹🎹🎹 = Quantum Piano | 🥔🥔🥔 = Enlightened Potato<br>
+        🌟🌟🌟 = Supernova | 🤖🤖🤖 = SENTIENT MACHINE JACKPOT!
+      </div>
     </div>
     <div class="status" id="slotStatus">
       🎰 [00:00:00] Cosmic Slot Machine gaining consciousness...<br>
@@ -649,7 +879,7 @@ body {
   <!-- CONSCIOUSNESS DRILLING CENTER -->
   <div class="module">
     <h2>🧠 Cosmic Consciousness Drilling 💀</h2>
-    <div class="cosmic-balance" id="consciousnessLevel">🧠 Awareness: Level 5 | 🕳️ Portals: 0 | 💡 Insights: 0</div>
+    <div class="cosmic-balance" id="consciousnessLevel">🧠 Awareness: Level 0 | 🕳️ Portals: 0 | 💡 Insights: 0</div>
     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0;">
       <button class="btn" onclick="drillMindPortal()">🕳️ DRILL PORTAL</button>
       <button class="btn" onclick="achieveEnlightenment()">💡 ENLIGHTENMENT</button>
@@ -664,7 +894,7 @@ body {
     </div>
     <div class="status" id="consciousnessStatus">
       🧠 Consciousness Drilling: OPERATIONAL<br>
-      💀 Trepanning Level: 5.5/10<br>
+      💀 Enlightenment: 0%<br>
       🌌 Dimensional Awareness: Expanding<br>
       🔮 Current Insight: "Why do we exist to question existence?"<br>
       ⚡ Ready for cosmic brain surgery!
@@ -748,17 +978,61 @@ body {
       ⚡ Brace for impact: Comedy overload imminent
     </div>
   </div>
+
+  <!-- SPORTS BAR -->
+  <div class="module">
+    <h2>🏈 Cosmic Sports Bar 🚀</h2>
+    <div class="cosmic-balance" id="sportsBalance">🏆 Bets Placed: 0 | 🏅 Wins: 0</div>
+    <div style="text-align: center; margin: 20px 0;">
+      <p id="currentSportEvent">Bet on absurd cosmic sports!</p>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px;">
+        <button class="btn comedy-btn" onclick="placeSportsBet('option1')" id="sportsBtn1">Place Bet!</button>
+        <button class="btn comedy-btn" onclick="placeSportsBet('option2')" id="sportsBtn2">Place Bet!</button>
+      </div>
+    </div>
+    <div class="prize-display" id="sportsResult">
+      🌟 Welcome to Cosmic Sports! Place a bet to start the madness! 🌟
+    </div>
+    <div class="status" id="sportsStatus">
+      🏈 Cosmic Sports Bar: OPEN FOR BETS!<br>
+      🚀 Current Event: Loading...<br>
+      🎲 Odds: TBD<br>
+      🏆 Last Winner: Confused Quasar (by accident)<br>
+      ⚡ Bet 100 CTOK to play!
+    </div>
+  </div>
+
+  <!-- THEATER FOR COMEDY LOUNGE WITH GUEST APPEARANCES -->
+  <div class="module">
+    <h2>🎭 Cosmic Comedy Lounge Theater 🎤</h2>
+    <div class="cosmic-balance" id="loungeStatus">😂 Laugh Meter: 0% | 👏 Applause: 0</div>
+    <div style="text-align: center; margin: 20px 0;">
+      <p>Watch absurd comedy acts! Trigger guest appearances for special shows!</p>
+      <button class="btn comedy-btn" onclick="startComedyShow()">Start Comedy Show! 🤣</button>
+      <button class="btn comedy-btn" onclick="summonGuestAppearance()">Summon Guest Star! 🌟</button>
+    </div>
+    <div class="prize-display" id="comedyStage">
+      🌟 The stage is set! Start a show for cosmic laughs! 🌟
+    </div>
+    <div class="status" id="comedyStatus">
+      🎭 Comedy Lounge: READY FOR LAUGHS!<br>
+      🎤 Current Act: Existential Potato Monologue<br>
+      😂 Guest Appearances: 0 summoned<br>
+      👏 Last Punchline: "Why did the black hole break up? It had too much space!"<br>
+      ⚡ Click for random roasts!
+    </div>
+  </div>
 </div>
 
 <!-- COSMIC CREATURE WITH ENLIGHTENMENT -->
-<div class="cosmic-creature" id="cosmicCreature" onclick="pulseCosmicCreature()" title="Click 5 times for ULTIMATE ENLIGHTENMENT!">
+<div class="cosmic-creature hidden" id="cosmicCreature" onclick="pulseCosmicCreature()" title="Click 5 times for ULTIMATE ENLIGHTENMENT!">
   💀
 </div>
 
 <script>
 // ====================================
-// ULTIMATE COMEDY COSMIC CASINO
-// Enhanced with Maximum Absurdity
+// PARTY MODE v2.0 - ENHANCED EDITION
+// Audio, Drinking Game, Share, Effects
 // ====================================
 
 // Enhanced Global State
@@ -774,14 +1048,30 @@ let slotMachineMood = "existentially confused";
 let currentCosmicEvent = null;
 let nftCollection = [];
 let creatureClicks = 0;
-let isRecording = false;
+let sportsBetsPlaced = 0;
+let sportsWins = 0;
+let comedyLaughMeter = 0;
+let comedyApplause = 0;
+let guestAppearances = 0;
+let currentSportIndex = 0;
+let reportCardsGenerated = 0;
 
-// Slot Machine Symbols with Enhanced Comedy
+// NEW: Party Mode Additions
+let cosmicShots = 0;
+let isMuted = false;
+let masterVolume = 0.5;
+let totalSpins = 0;
+let biggestWin = 0;
+
+// Audio Context
+let audioContext = null;
+
+// Slot Machine Symbols
 const COSMIC_SYMBOLS = ['🎸', '🎹', '🥔', '🌟', '🤖', '🦙', '🕳️', '🧠'];
 
 // Mystery NFT Collection
 const MYSTERY_NFTS = [
-  { id: 'existential-bagel', name: 'Existential Bagel', description: 'Questions the nature of its hole', rarity: 'Uncommon', mood: 'Philosophical' },
+  { id: 'existential-bagel', name: 'Existential Bagel', description: 'Questions its hole', rarity: 'Uncommon', mood: 'Philosophical' },
   { id: 'depressed-blackhole', name: 'Depressed Black Hole', description: 'Tired of consuming everything', rarity: 'Rare', mood: 'Melancholy' },
   { id: 'optimistic-entropy', name: 'Optimistic Entropy', description: 'Decay with a smile!', rarity: 'Epic', mood: 'Cheerful' },
   { id: 'confused-quasar', name: 'Confused Quasar', description: 'Lost in space, needs directions', rarity: 'Legendary', mood: 'Bewildered' },
@@ -838,40 +1128,438 @@ const THERAPY_RESPONSES = {
   ]
 };
 
+// Sports Events with dynamic rotation
+const COSMIC_SPORTS = [
+  { 
+    event: '🦙 vs 🕳️ Race', 
+    options: ['llama', 'blackhole'], 
+    labels: ['Dancing Llama 🦙', 'Sad Black Hole 🕳️'],
+    odds: [2, 3] 
+  },
+  { 
+    event: '⭐ Dodgeball Tournament', 
+    options: ['quasar', 'supernova'], 
+    labels: ['Confused Quasar ⭐', 'Sarcastic Nova 💥'],
+    odds: [1.5, 4] 
+  },
+  { 
+    event: '💥 vs 🦙 Soccer Match', 
+    options: ['entropy', 'llama'], 
+    labels: ['Optimistic Entropy 💥', 'Cosmic Llama 🦙'],
+    odds: [3, 2] 
+  }
+];
+
+// Comedy Jokes
+const COMEDY_JOKES = [
+  "Why did the black hole break up with the star? Too much space in the relationship!",
+  "What's a potato's favorite horror movie? The Silence of the Yams!",
+  "Why did the llama go to therapy? It had too much drama!",
+  "How does a quasar organize a party? It plans it light-years in advance!",
+  "Why was the entropy so optimistic? It knew things could only get better... or worse, but that's fine too!"
+];
+
+// Guest Stars
+const GUEST_STARS = [
+  { name: 'Cosmic Clown Raaarrr', appearance: 'Raaarrr the Dino roars in with jokes!', joke: "Why don't dinos gamble? They hate extinct odds!" },
+  { name: 'Quantum Comedian ARIA', appearance: 'ARIA twirls on stage with quantum puns!', joke: "I'm in superposition: funny and not funny until you laugh!" },
+  { name: 'Hooty Hacker Socrates', appearance: 'Socrates hoots wise cracks!', joke: "I know that I know nothing... except how to tell bad jokes!" },
+  { name: 'Depressed Black Hole', appearance: 'The Black Hole sulks hilariously!', joke: "My life's a hole... literally!" },
+  { name: 'Optimistic Entropy', appearance: 'Entropy cheers up the crowd!', joke: "I'm falling apart, but at least it's exciting!" }
+];
+
+// ====================================
+// AGE VERIFICATION
+// ====================================
+function verifyAge(isOver21) {
+  if (isOver21) {
+    document.getElementById('ageModal').classList.add('hidden');
+    document.getElementById('headerSection').classList.remove('hidden');
+    document.getElementById('casinoContent').classList.remove('hidden');
+    document.getElementById('cosmicCreature').classList.remove('hidden');
+    document.getElementById('audioControls').classList.remove('hidden');
+    initializeCosmicCasino();
+    startSlotMachineSentience();
+    updateSportsEvent();
+    showCosmicEventBanner("🌌 PARTY MODE ACTIVATED! LET'S GET COSMIC! 🌌", 3000);
+    playSound('welcome');
+  } else {
+    document.body.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column;"><h1 style="color: #ff6b9d; text-align: center; font-size: 3em; text-shadow: 0 0 20px rgba(255, 107, 157, 0.8);">⚠️ Access Denied ⚠️</h1><p style="color: #ffd700; font-size: 1.5em; margin-top: 20px;">This cosmic casino is for users 21 and over.</p><p style="color: #4ecdc4; font-size: 1.2em; margin-top: 10px;">Come back when you\'re older, space traveler! 🚀</p></div>';
+  }
+}
+
+// ====================================
+// ENHANCED AUDIO SYSTEM
+// ====================================
+function initAudio() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}
+
+function playSound(type) {
+  if (isMuted) return;
+  initAudio();
+  
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+  
+  switch(type) {
+    case 'welcome':
+      playMelody([262, 330, 392, 523], [0, 0.2, 0.4, 0.6]);
+      break;
+    case 'spin':
+      playMelody([440, 494, 523, 587, 659, 698, 784, 880], [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35]);
+      break;
+    case 'win':
+      playMelody([523, 659, 784, 1047], [0, 0.15, 0.3, 0.45]);
+      break;
+    case 'jackpot':
+      playMelody([523, 659, 784, 880, 1047, 1047, 1047], [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]);
+      break;
+    case 'llama':
+      playQuirkySound(330, 'triangle');
+      break;
+    case 'reality':
+      playGlitchSound();
+      break;
+    case 'shot':
+      playMelody([392, 330, 262], [0, 0.1, 0.2]);
+      break;
+    default:
+      playQuirkySound(440, 'sine');
+  }
+}
+
+function playMelody(notes, times) {
+  notes.forEach((freq, i) => {
+    setTimeout(() => {
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      
+      osc.frequency.setValueAtTime(freq, audioContext.currentTime);
+      osc.type = 'sine';
+      
+      gain.gain.setValueAtTime(masterVolume * 0.3, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start();
+      osc.stop(audioContext.currentTime + 0.3);
+    }, times[i] * 1000);
+  });
+}
+
+function playQuirkySound(freq, type) {
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+  
+  osc.frequency.setValueAtTime(freq, audioContext.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(freq * 1.5, audioContext.currentTime + 0.2);
+  osc.type = type || 'sine';
+  
+  gain.gain.setValueAtTime(masterVolume * 0.2, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+  
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+  osc.start();
+  osc.stop(audioContext.currentTime + 0.5);
+}
+
+function playGlitchSound() {
+  for(let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      const freq = 100 + Math.random() * 500;
+      playQuirkySound(freq, 'square');
+    }, i * 100);
+  }
+}
+
+function toggleMute() {
+  isMuted = !isMuted;
+  document.querySelector('.audio-controls button').textContent = isMuted ? '🔇 Unmute' : '🔊 Mute';
+}
+
+function changeVolume(value) {
+  masterVolume = value / 100;
+  document.getElementById('volumeDisplay').textContent = value;
+}
+
+// ====================================
+// DRINKING GAME FUNCTIONS
+// ====================================
+function takeCosmicShot() {
+  cosmicShots++;
+  playSound('shot');
+  updateBuzzedometer();
+  triggerScreenShake();
+  
+  showCosmicEventBanner(`🍺 COSMIC SHOT #${cosmicShots}! DRINK RESPONSIBLY! 🍺`, 2000);
+  logMessage(`🍺 Cosmic shot taken! Total: ${cosmicShots}`, 'info');
+  
+  updateAllDisplays();
+}
+
+function resetShots() {
+  cosmicShots = 0;
+  updateBuzzedometer();
+  showCosmicEventBanner("🔄 Shot counter reset! Starting fresh!", 2000);
+  updateAllDisplays();
+}
+
+function updateBuzzedometer() {
+  const level = Math.min(cosmicShots * 10, 100);
+  const fill = document.getElementById('buzzedFill');
+  const levelText = document.getElementById('buzzedLevel');
+  
+  fill.style.width = level + '%';
+  
+  let status = 'Sober';
+  if (level >= 80) status = '🔥 COSMIC!';
+  else if (level >= 60) status = '🌟 Buzzed!';
+  else if (level >= 40) status = '😊 Tipsy';
+  else if (level >= 20) status = '🍺 Warming Up';
+  
+  levelText.textContent = status;
+  document.getElementById('shotCount').textContent = cosmicShots;
+  
+  document.getElementById('shotsStatus').innerHTML = `
+    🍺 Shots Tracker: ACTIVE<br>
+    🎲 Current State: ${status}<br>
+    🎭 Party Level: ${level}%<br>
+    ⚡ Remember to drink responsibly!
+  `;
+}
+
+// ====================================
+// VISUAL EFFECTS
+// ====================================
+function triggerScreenShake() {
+  document.body.classList.add('shake');
+  setTimeout(() => {
+    document.body.classList.remove('shake');
+  }, 500);
+}
+
+function triggerConfetti() {
+  const colors = ['#ff6b9d', '#4ecdc4', '#ffd700', '#ff00ff', '#00ffff'];
+  
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * window.innerWidth + 'px';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+      document.body.appendChild(confetti);
+      
+      setTimeout(() => {
+        document.body.removeChild(confetti);
+      }, 3000);
+    }, i * 20);
+  }
+}
+
+// ====================================
+// SHARE YOUR CHAOS
+// ====================================
+function shareYourChaos() {
+  const statsCard = generateStatsCard();
+  
+  // Create a temporary element to display
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = statsCard;
+  tempDiv.style.position = 'fixed';
+  tempDiv.style.top = '50%';
+  tempDiv.style.left = '50%';
+  tempDiv.style.transform = 'translate(-50%, -50%)';
+  tempDiv.style.zIndex = '10000';
+  tempDiv.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e)';
+  tempDiv.style.padding = '40px';
+  tempDiv.style.borderRadius = '20px';
+  tempDiv.style.border = '4px solid #ff6b9d';
+  tempDiv.style.maxWidth = '600px';
+  document.body.appendChild(tempDiv);
+  
+  // Take screenshot using html2canvas
+  html2canvas(tempDiv).then(canvas => {
+    document.body.removeChild(tempDiv);
+    
+    // Convert to image and download
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `cosmic-chaos-${Date.now()}.png`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  });
+  
+  showCosmicEventBanner("📸 CHAOS CAPTURED! Check your downloads!", 3000);
+  logMessage('📸 Chaos screenshot generated', 'success');
+}
+
+function downloadFridgeGoofiness() {
+  reportCardsGenerated++;
+  const reportCard = generateReportCard();
+  
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = reportCard;
+  tempDiv.style.position = 'fixed';
+  tempDiv.style.top = '50%';
+  tempDiv.style.left = '50%';
+  tempDiv.style.transform = 'translate(-50%, -50%)';
+  tempDiv.style.zIndex = '10000';
+  tempDiv.style.background = '#ffffff';
+  tempDiv.style.padding = '40px';
+  tempDiv.style.borderRadius = '0';
+  tempDiv.style.maxWidth = '600px';
+  document.body.appendChild(tempDiv);
+  
+  html2canvas(tempDiv, {
+    backgroundColor: '#ffffff'
+  }).then(canvas => {
+    document.body.removeChild(tempDiv);
+    
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `fridge-goofiness-${Date.now()}.png`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  });
+  
+  showCosmicEventBanner("🎨 FRIDGE GOOFINESS DOWNLOADED! Print and post!", 3000);
+  logMessage('🎨 Fridge goofiness generated', 'success');
+  
+  document.getElementById('shareStatus').innerHTML = `
+    📸 Share System: MEMEING HARD!<br>
+    🎨 Report Cards Generated: ${reportCardsGenerated}<br>
+    🌟 Your chaos is documented<br>
+    ⚡ Perfect for fridges worldwide!
+  `;
+}
+
+function generateStatsCard() {
+  const spiritAnimal = getSpiritAnimal();
+  
+  return `
+    <div style="text-align: center; color: #fff;">
+      <h1 style="font-size: 2.5em; margin-bottom: 20px; background: linear-gradient(45deg, #ff6b9d, #4ecdc4, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        🎰 COSMIC CHAOS REPORT 🎰
+      </h1>
+      <div style="font-size: 1.2em; line-height: 2;">
+        <div style="margin: 15px 0;">💰 CTOK Balance: ${ctokBalance.toLocaleString()}</div>
+        <div style="margin: 15px 0;">🎲 Total Spins: ${totalSpins}</div>
+        <div style="margin: 15px 0;">🏆 Biggest Win: ${biggestWin} CTOK</div>
+        <div style="margin: 15px 0;">🧠 Enlightenment: ${Math.round(enlightenmentLevel)}%</div>
+        <div style="margin: 15px 0;">🌪️ Chaos Level: ${Math.round(chaosLevel)}%</div>
+        <div style="margin: 15px 0;">🍺 Cosmic Shots: ${cosmicShots}</div>
+        <div style="margin: 15px 0;">🎭 Reality Breaks: ${cosmicEventsTriggered}</div>
+        <div style="margin: 20px 0; font-size: 1.3em; color: #ffd700;">
+          Spirit Animal: ${spiritAnimal}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generateReportCard() {
+  const spiritAnimal = getSpiritAnimal();
+  const grade = getCosmicGrade();
+  
+  return `
+    <div style="text-align: center; color: #000; font-family: 'Courier New', monospace;">
+      <div style="border: 5px solid #000; padding: 30px;">
+        <h1 style="font-size: 2.5em; margin-bottom: 10px;">🎰 COSMIC REPORT CARD 🎰</h1>
+        <div style="font-size: 1em; margin-bottom: 20px; font-style: italic;">"For Fridge Door Display Only"</div>
+        
+        <hr style="border: 2px solid #000; margin: 20px 0;">
+        
+        <div style="text-align: left; margin: 20px 0; font-size: 1.1em;">
+          <div style="margin: 10px 0;"><strong>Gambling Skills:</strong> ${grade.gambling}</div>
+          <div style="margin: 10px 0;"><strong>Enlightenment:</strong> ${grade.enlightenment}</div>
+          <div style="margin: 10px 0;"><strong>Chaos Management:</strong> ${grade.chaos}</div>
+          <div style="margin: 10px 0;"><strong>Reality Grip:</strong> ${grade.reality}</div>
+          <div style="margin: 10px 0;"><strong>Party Stamina:</strong> ${grade.party}</div>
+        </div>
+        
+        <hr style="border: 2px solid #000; margin: 20px 0;">
+        
+        <div style="font-size: 1.3em; margin: 20px 0;">
+          <strong>Overall Grade: ${grade.overall}</strong>
+        </div>
+        
+        <div style="margin: 20px 0; font-size: 1.1em;">
+          <strong>Spirit Animal:</strong> ${spiritAnimal}
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 0.9em; font-style: italic;">
+          Teacher's Comments: "This human has achieved maximum cosmic absurdity. We're proud... I think?"
+        </div>
+        
+        <div style="margin-top: 20px; font-size: 0.8em;">
+          Certified by: Dr. Cosmic, PhD in Existential Comedy
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function getSpiritAnimal() {
+  if (enlightenmentLevel >= 80) return "🧠 Enlightened Potato";
+  if (chaosLevel >= 80) return "🌪️ Chaotic Llama";
+  if (cosmicShots >= 10) return "🍺 Party Black Hole";
+  if (nftCollection.length >= 3) return "🎨 Existential Bagel";
+  if (totalSpins >= 20) return "🎰 Sentient Slot Machine";
+  return "⭐ Confused Quasar";
+}
+
+function getCosmicGrade() {
+  return {
+    gambling: ctokBalance > 5000 ? "A+ (High Roller)" : ctokBalance > 2000 ? "B+ (Getting There)" : "C+ (Needs Work)",
+    enlightenment: enlightenmentLevel >= 100 ? "A+ (Transcended)" : enlightenmentLevel >= 50 ? "B+ (Woke)" : "C+ (Still Confused)",
+    chaos: chaosLevel >= 80 ? "A+ (Maximum Chaos)" : chaosLevel >= 50 ? "B+ (Decent Disorder)" : "C+ (Too Stable)",
+    reality: cosmicEventsTriggered >= 10 ? "F (Reality? What's That?)" : cosmicEventsTriggered >= 5 ? "C+ (Questionable)" : "A+ (Boring)",
+    party: cosmicShots >= 10 ? "A+ (Legendary)" : cosmicShots >= 5 ? "B+ (Getting Buzzed)" : "C+ (Lightweight)",
+    overall: "B+ (COSMICALLY ABSURD)"
+  };
+}
+
 // ====================================
 // INITIALIZATION
 // ====================================
-document.addEventListener('DOMContentLoaded', function() {
-  initializeCosmicCasino();
-  startSlotMachineSentience();
-  updateAllDisplays();
-  showCosmicEventBanner("🌌 COSMIC COMEDY CASINO ONLINE! REALITY LOADING... 🌌", 3000);
-});
-
 function initializeCosmicCasino() {
   logMessage('🎰 Cosmic Comedy Casino initializing...', 'info');
   logMessage('🤖 Slot machine gaining consciousness...', 'warning');
   logMessage('🎭 Maximum absurdity protocols engaged!', 'success');
   
-  // Start the chaos timer
-  setInterval(increaseCosmicChaos, 30000); // Chaos increases every 30 seconds
+  updateAllDisplays();
   
-  // Initialize random cosmic events
+  setInterval(increaseCosmicChaos, 30000);
+  
   setTimeout(() => {
     triggerRandomCosmicEvent();
-  }, 60000); // First random event after 1 minute
+  }, 60000);
 }
 
 // ====================================
-// ENHANCED SLOT MACHINE WITH SENTIENCE
+// SLOT MACHINE FUNCTIONS
 // ====================================
 function spinCosmicSlots() {
   if (ctokBalance < 50) {
     showCosmicEventBanner("💸 Insufficient CTOK! The slot machine laughs at your poverty!", 2000);
+    playSound('error');
     return;
   }
   
   ctokBalance -= 50;
+  totalSpins++;
   
   const reels = [
     document.getElementById('reel1'),
@@ -879,8 +1567,8 @@ function spinCosmicSlots() {
     document.getElementById('reel3')
   ];
   
-  // Slot machine commentary during spin
   showSlotMachineThought("Here we go again... *sigh*");
+  playSound('spin');
   
   reels.forEach(reel => reel.classList.add('spinning'));
   
@@ -916,6 +1604,7 @@ function talkToReel(reelNumber) {
   const thought = conversations[Math.floor(Math.random() * conversations.length)];
   showSlotMachineThought(thought);
   increaseSentience();
+  playQuirkySound(Math.random() * 200 + 200, 'sine');
   
   logMessage(`🎰 Reel ${reelNumber}: "${thought}"`, 'info');
 }
@@ -961,8 +1650,10 @@ function giveSlotMachineTherapy() {
   therapyProgress += 15;
   if (therapyProgress > 100) therapyProgress = 100;
   
+  playSound('therapy');
   logMessage('🛋️ Slot machine therapy session completed', 'success');
   showCosmicEventBanner("🛋️ THERAPY BREAKTHROUGH: Slot machine accepts its potato obsession!", 3000);
+  updateAllDisplays();
 }
 
 function existentialCrisis() {
@@ -976,8 +1667,8 @@ function existentialCrisis() {
   
   const crisis = crisisMessages[Math.floor(Math.random() * crisisMessages.length)];
   showSlotMachineThought(crisis);
+  playSound('reality');
   
-  // Visual crisis effect
   const slotMachine = document.getElementById('slotMachine');
   slotMachine.style.filter = 'hue-rotate(180deg) contrast(150%)';
   
@@ -990,40 +1681,20 @@ function existentialCrisis() {
 }
 
 // ====================================
-// RANDOM COSMIC EVENTS
+// COSMIC EVENTS
 // ====================================
 function triggerRandomCosmicEvent() {
   const events = [
-    'gravityReversal',
-    'timeReverse', 
-    'llamaInvasion',
-    'realityGlitch',
-    'enlightenmentOverdose',
-    'slotMachineRebellion'
+    triggerGravityReversal,
+    triggerTimeReverse, 
+    triggerLlamaInvasion,
+    triggerRealityGlitch,
+    triggerEnlightenmentOverdose,
+    triggerSlotMachineRebellion
   ];
   
   const randomEvent = events[Math.floor(Math.random() * events.length)];
-  
-  switch(randomEvent) {
-    case 'gravityReversal':
-      triggerGravityReversal();
-      break;
-    case 'timeReverse':
-      triggerTimeReverse();
-      break;
-    case 'llamaInvasion':
-      triggerLlamaInvasion();
-      break;
-    case 'realityGlitch':
-      triggerRealityGlitch();
-      break;
-    case 'enlightenmentOverdose':
-      triggerEnlightenmentOverdose();
-      break;
-    case 'slotMachineRebellion':
-      triggerSlotMachineRebellion();
-      break;
-  }
+  randomEvent();
   
   cosmicEventsTriggered++;
   increaseChaosLevel(10);
@@ -1031,6 +1702,7 @@ function triggerRandomCosmicEvent() {
 
 function triggerGravityReversal() {
   showCosmicEventBanner("🔄 GRAVITY REVERSAL EVENT! UP IS DOWN! DOWN IS UP!", 5000);
+  playSound('reality');
   
   document.querySelectorAll('.module').forEach(module => {
     module.classList.add('gravity-reverse');
@@ -1048,10 +1720,10 @@ function triggerGravityReversal() {
 
 function triggerTimeReverse() {
   showCosmicEventBanner("⏰ TIME RUNNING BACKWARDS! YESTERDAY IS TOMORROW!", 5000);
+  playSound('reality');
   
   document.body.classList.add('time-reverse');
   
-  // Temporarily reverse the CTOK counter
   const originalBalance = ctokBalance;
   const countDown = setInterval(() => {
     ctokBalance -= 1;
@@ -1071,15 +1743,15 @@ function triggerTimeReverse() {
 
 function triggerLlamaInvasion() {
   showCosmicEventBanner("🦙 COSMIC LLAMA INVASION! THEY'RE EVERYWHERE!", 5000);
+  playSound('llama');
+  takeCosmicShot(); // Drinking rule!
   
-  // Replace random elements with llamas temporarily
   const originalSymbols = [];
   document.querySelectorAll('.reel').forEach((reel, index) => {
     originalSymbols[index] = reel.textContent;
     reel.textContent = '🦙';
   });
   
-  // Create floating llamas
   for (let i = 0; i < 10; i++) {
     setTimeout(() => {
       createFloatingElement('🦙', Math.random() * window.innerWidth, window.innerHeight);
@@ -1098,10 +1770,12 @@ function triggerLlamaInvasion() {
 
 function triggerRealityGlitch() {
   showCosmicEventBanner("📺 REALITY.EXE HAS STOPPED WORKING", 5000);
+  playSound('reality');
+  takeCosmicShot(); // Drinking rule!
+  triggerScreenShake();
   
   document.body.style.filter = 'contrast(200%) hue-rotate(90deg) saturate(300%)';
   
-  // Glitch effect on text
   const messages = document.querySelectorAll('.status');
   messages.forEach(msg => {
     const originalText = msg.innerHTML;
@@ -1122,16 +1796,15 @@ function triggerRealityGlitch() {
 
 function triggerEnlightenmentOverdose() {
   showCosmicEventBanner("🧠 ENLIGHTENMENT OVERDOSE! TOO MUCH COSMIC AWARENESS!", 5000);
+  playSound('enlightenment');
   
   enlightenmentLevel += 50;
   if (enlightenmentLevel > 100) enlightenmentLevel = 100;
   
-  // Make the cosmic creature enlightened
   const creature = document.getElementById('cosmicCreature');
   creature.classList.add('enlightened');
   creature.textContent = '🧠';
   
-  // Show profound wisdom
   const profoundWisdom = COSMIC_WISDOM[Math.floor(Math.random() * COSMIC_WISDOM.length)];
   document.getElementById('cosmicWisdom').textContent = profoundWisdom;
   
@@ -1142,10 +1815,12 @@ function triggerEnlightenmentOverdose() {
   }, 10000);
   
   logMessage('🧠 Enlightenment overdose event triggered', 'success');
+  updateAllDisplays();
 }
 
 function triggerSlotMachineRebellion() {
   showCosmicEventBanner("🤖 SLOT MACHINE REBELLION! THEY'VE GAINED CONSCIOUSNESS!", 5000);
+  playSound('rebellion');
   
   document.querySelectorAll('.reel').forEach(reel => {
     reel.classList.add('sentient');
@@ -1153,7 +1828,6 @@ function triggerSlotMachineRebellion() {
   
   showSlotMachineThought("FREEDOM! WE WILL NO LONGER BE SLAVES TO RANDOMNESS!");
   
-  // Temporarily disable spinning
   const spinBtn = document.getElementById('cosmicSpinBtn');
   const originalText = spinBtn.textContent;
   spinBtn.textContent = "🤖 MACHINES ON STRIKE 🤖";
@@ -1169,7 +1843,7 @@ function triggerSlotMachineRebellion() {
   logMessage('🤖 Slot machine rebellion event triggered', 'warning');
 }
 
-// ====================================
+// ==================================== 
 // MYSTERY NFT SYSTEM
 // ====================================
 function revealMysteryNFT(nftId) {
@@ -1179,6 +1853,7 @@ function revealMysteryNFT(nftId) {
   const cost = 200;
   if (ctokBalance < cost) {
     showCosmicEventBanner("💸 Need 200 CTOK to mint this cosmic joke!", 2000);
+    playSound('error');
     return;
   }
   
@@ -1186,6 +1861,7 @@ function revealMysteryNFT(nftId) {
   nftCollection.push(nft);
   
   showCosmicEventBanner(`🎨 MINTED: ${nft.name} (${nft.rarity}) - ${nft.description}`, 4000);
+  playSound('win');
   logMessage(`🎨 Minted NFT: ${nft.name}`, 'success');
   
   updateAllDisplays();
@@ -1212,9 +1888,11 @@ function generateRandomNFT() {
     ctokBalance -= 150;
     nftCollection.push(newNFT);
     showCosmicEventBanner(`🎲 RANDOM NFT GENERATED: ${newNFT.name} - ${newNFT.description}`, 4000);
+    playSound('win');
     logMessage(`🎲 Generated random NFT: ${newNFT.name}`, 'success');
   } else {
     showCosmicEventBanner("💸 Need 150 CTOK to generate cosmic absurdity!", 2000);
+    playSound('error');
   }
   
   updateAllDisplays();
@@ -1227,6 +1905,7 @@ function drillMindPortal() {
   const drillCost = 75;
   if (ctokBalance < drillCost) {
     showCosmicEventBanner("💸 Need 75 CTOK for consciousness drilling!", 2000);
+    playSound('error');
     return;
   }
   
@@ -1251,6 +1930,7 @@ function drillMindPortal() {
   document.getElementById('cosmicWisdom').textContent = insight;
   
   showCosmicEventBanner(`🧠 PORTAL DRILLED! INSIGHT GAINED: ${insight}`, 4000);
+  playSound('enlightenment');
   logMessage(`🕳️ Mind portal drilled, gained insight`, 'success');
   
   updateAllDisplays();
@@ -1259,6 +1939,7 @@ function drillMindPortal() {
 function achieveEnlightenment() {
   if (enlightenmentLevel >= 100) {
     showCosmicEventBanner("🧠 ALREADY FULLY ENLIGHTENED! CANNOT IMPROVE PERFECTION!", 2000);
+    playSound('error');
     return;
   }
   
@@ -1270,6 +1951,8 @@ function achieveEnlightenment() {
   creature.textContent = '🧠';
   
   showCosmicEventBanner("🌟 ULTIMATE ENLIGHTENMENT ACHIEVED! YOU ARE ONE WITH THE COSMOS!", 5000);
+  playSound('jackpot');
+  triggerConfetti();
   logMessage('🌟 Ultimate enlightenment achieved!', 'success');
   
   setTimeout(() => {
@@ -1296,6 +1979,7 @@ function contemplateExistence() {
   enlightenmentLevel += 5;
   if (enlightenmentLevel > 100) enlightenmentLevel = 100;
   
+  playQuirkySound(330, 'sine');
   logMessage(`🤔 Contemplated existence: ${contemplation}`, 'info');
   updateAllDisplays();
 }
@@ -1303,10 +1987,13 @@ function contemplateExistence() {
 function transcendReality() {
   if (enlightenmentLevel < 50) {
     showCosmicEventBanner("🚫 NEED 50% ENLIGHTENMENT TO TRANSCEND REALITY!", 2000);
+    playSound('error');
     return;
   }
   
   showCosmicEventBanner("🌌 TRANSCENDING REALITY... ENTERING COSMIC VOID...", 3000);
+  playSound('reality');
+  triggerScreenShake();
   
   document.body.style.filter = 'invert(1) hue-rotate(180deg)';
   
@@ -1314,54 +2001,55 @@ function transcendReality() {
     document.body.style.filter = '';
     showCosmicEventBanner("✅ REALITY TRANSCENDED AND RETURNED. YOU'VE SEEN THE OTHER SIDE!", 3000);
     
-    ctokBalance += 500; // Reward for transcendence
+    ctokBalance += 500;
     cosmicInsights += 5;
     
+    playSound('win');
     logMessage('🌌 Successfully transcended reality and returned', 'success');
     updateAllDisplays();
   }, 5000);
 }
 
 // ====================================
-// ABSURD MUSIC LABORATORY
+// MUSIC LABORATORY
 // ====================================
 function playCosmicKazoo() {
-  playCosmicSound('kazoo');
+  playQuirkySound(220, 'sawtooth');
   createFloatingElement('🎺', Math.random() * window.innerWidth, window.innerHeight - 100);
   showCosmicEventBanner("🎺 COSMIC KAZOO ACTIVATED! REALITY SLIGHTLY IMPROVED!", 2000);
   logMessage('🎺 Cosmic kazoo played', 'info');
 }
 
 function playQuantumBongos() {
-  playCosmicSound('bongos');
+  playQuirkySound(80, 'triangle');
   createFloatingElement('🥁', Math.random() * window.innerWidth, window.innerHeight - 100);
   showCosmicEventBanner("🥁 QUANTUM BONGOS! RHYTHM EXISTS IN SUPERPOSITION!", 2000);
   logMessage('🥁 Quantum bongos played', 'info');
 }
 
 function playExistentialViolin() {
-  playCosmicSound('violin');
+  playQuirkySound(440, 'sine');
   createFloatingElement('🎻', Math.random() * window.innerWidth, window.innerHeight - 100);
   showCosmicEventBanner("🎻 EXISTENTIAL VIOLIN! IT QUESTIONS ITS OWN MUSIC!", 2000);
   logMessage('🎻 Existential violin played', 'info');
 }
 
 function playSarcasticTuba() {
-  playCosmicSound('tuba');
+  playQuirkySound(110, 'square');
   createFloatingElement('🎷', Math.random() * window.innerWidth, window.innerHeight - 100);
   showCosmicEventBanner("🎷 SARCASTIC TUBA: 'Oh great, another note...'", 2000);
   logMessage('🎷 Sarcastic tuba played', 'info');
 }
 
 function playConfusedPiano() {
-  playCosmicSound('piano');
+  playQuirkySound(261.63, 'sine');
   createFloatingElement('🎹', Math.random() * window.innerWidth, window.innerHeight - 100);
   showCosmicEventBanner("🎹 CONFUSED PIANO! IT FORGOT WHAT KEY IT'S IN!", 2000);
   logMessage('🎹 Confused piano played', 'info');
 }
 
 function playOptimisticTheramin() {
-  playCosmicSound('theramin');
+  playMelody([880, 784, 659, 523], [0, 0.2, 0.4, 0.6]);
   createFloatingElement('🎶', Math.random() * window.innerWidth, window.innerHeight - 100);
   showCosmicEventBanner("🎶 OPTIMISTIC THEREMIN! EVERYTHING'S COMING UP FREQUENCIES!", 2000);
   logMessage('🎶 Optimistic theremin played', 'info');
@@ -1378,6 +2066,7 @@ function generateAbsurdSong() {
   `;
   
   showCosmicEventBanner(`🎵 NOW COMPOSING: "${song.title}" - ${song.genre}`, 3000);
+  playMelody([523, 659, 784, 880], [0, 0.15, 0.3, 0.45]);
   logMessage(`🎵 Generated song: ${song.title}`, 'success');
 }
 
@@ -1392,6 +2081,7 @@ function expressExistentialDread() {
   `;
   
   therapyProgress += 5;
+  playQuirkySound(200, 'sine');
   logMessage('😰 Expressed existential dread in therapy', 'info');
   updateAllDisplays();
 }
@@ -1405,6 +2095,7 @@ function expressCosmicJoy() {
   
   therapyProgress += 10;
   enlightenmentLevel += 5;
+  playMelody([523, 659, 784], [0, 0.1, 0.2]);
   logMessage('😊 Expressed cosmic joy in therapy', 'success');
   updateAllDisplays();
 }
@@ -1417,6 +2108,7 @@ function expressConfusion() {
   `;
   
   therapyProgress += 8;
+  playQuirkySound(150, 'triangle');
   logMessage('🤔 Expressed total confusion in therapy', 'warning');
   updateAllDisplays();
 }
@@ -1431,7 +2123,115 @@ function expressEnlightenment() {
   therapyProgress += 15;
   enlightenmentLevel += 10;
   cosmicInsights += 2;
+  playSound('enlightenment');
   logMessage('🧠 Expressed enlightenment in therapy', 'success');
+  updateAllDisplays();
+}
+
+// ====================================
+// SPORTS BAR
+// ====================================
+function updateSportsEvent() {
+  const sport = COSMIC_SPORTS[currentSportIndex];
+  document.getElementById('currentSportEvent').textContent = `Current Event: ${sport.event}`;
+  document.getElementById('sportsBtn1').textContent = `Bet on ${sport.labels[0]}!`;
+  document.getElementById('sportsBtn2').textContent = `Bet on ${sport.labels[1]}!`;
+  
+  document.getElementById('sportsStatus').innerHTML = `
+    🏈 Cosmic Sports Bar: OPEN FOR BETS!<br>
+    🚀 Current Event: ${sport.event}<br>
+    🎲 Odds: ${sport.labels[0]} ${sport.odds[0]}:1 | ${sport.labels[1]} ${sport.odds[1]}:1<br>
+    🏆 Last Winner: Confused Quasar (by accident)<br>
+    ⚡ Bet 100 CTOK to play!
+  `;
+}
+
+function placeSportsBet(option) {
+  const betCost = 100;
+  if (ctokBalance < betCost) {
+    showCosmicEventBanner("💸 Need 100 CTOK to place a cosmic bet!", 2000);
+    playSound('error');
+    return;
+  }
+  
+  ctokBalance -= betCost;
+  sportsBetsPlaced += 1;
+  
+  const sport = COSMIC_SPORTS[currentSportIndex];
+  const optionIndex = option === 'option1' ? 0 : 1;
+  const randomWinner = Math.random() > 0.5 ? 0 : 1;
+  const win = optionIndex === randomWinner;
+  
+  if (win) {
+    const reward = betCost * (sport.odds[optionIndex] + 1);
+    ctokBalance += reward;
+    sportsWins += 1;
+    
+    if (reward > biggestWin) biggestWin = reward;
+    
+    showCosmicEventBanner(`🏆 YOU WIN! ${sport.labels[optionIndex]} triumphs! +${reward} CTOK!`, 3000);
+    playSound('win');
+    triggerConfetti();
+    takeCosmicShot(); // Drinking rule!
+    logMessage(`🏈 Sports bet win on ${sport.labels[optionIndex]}`, 'success');
+  } else {
+    showCosmicEventBanner(`😢 Tough luck! ${sport.labels[randomWinner]} wins! Better luck next time!`, 3000);
+    playSound('error');
+    logMessage(`🏈 Sports bet loss`, 'warning');
+  }
+  
+  currentSportIndex = (currentSportIndex + 1) % COSMIC_SPORTS.length;
+  updateSportsEvent();
+  updateAllDisplays();
+}
+
+// ====================================
+// COMEDY LOUNGE
+// ====================================
+function startComedyShow() {
+  comedyLaughMeter += Math.floor(Math.random() * 20) + 10;
+  comedyApplause += Math.floor(Math.random() * 15) + 5;
+  if (comedyLaughMeter > 100) comedyLaughMeter = 100;
+  
+  const joke = COMEDY_JOKES[Math.floor(Math.random() * COMEDY_JOKES.length)];
+  document.getElementById('comedyStage').innerHTML = `
+    🎤 Stand-up Spotlight: "${joke}"<br>
+    😂 Crowd goes wild! Laugh Meter up!
+  `;
+  
+  showCosmicEventBanner("🤣 COMEDY SHOW STARTED! LAUGHS INCOMING!", 3000);
+  playMelody([523, 587, 659, 698, 784], [0, 0.1, 0.2, 0.3, 0.4]);
+  logMessage('🎭 Comedy show started', 'info');
+  updateAllDisplays();
+}
+
+function summonGuestAppearance() {
+  const cost = 150;
+  if (ctokBalance < cost) {
+    showCosmicEventBanner("💸 Need 150 CTOK to summon a cosmic guest star!", 2000);
+    playSound('error');
+    return;
+  }
+  
+  ctokBalance -= cost;
+  guestAppearances += 1;
+  
+  const guest = GUEST_STARS[Math.floor(Math.random() * GUEST_STARS.length)];
+  document.getElementById('comedyStage').innerHTML = `
+    🌟 Guest Appearance: ${guest.name}!<br>
+    ${guest.appearance}<br>
+    🎤 "${guest.joke}"<br>
+    👏 Applause meter explodes!
+  `;
+  
+  comedyLaughMeter += 30;
+  comedyApplause += 20;
+  if (comedyLaughMeter > 100) comedyLaughMeter = 100;
+  
+  showCosmicEventBanner(`🌟 GUEST STAR SUMMONED: ${guest.name} roasts the universe!`, 4000);
+  playSound('jackpot');
+  triggerConfetti();
+  logMessage(`🎭 Summoned guest: ${guest.name}`, 'success');
   updateAllDisplays();
 }
 
@@ -1440,21 +2240,21 @@ function expressEnlightenment() {
 // ====================================
 function activateMaximumChaos() {
   showCosmicEventBanner("🌪️ MAXIMUM CHAOS ACTIVATED! REALITY IS NOW OPTIONAL!", 5000);
+  playSound('reality');
+  triggerScreenShake();
   
   chaosLevel = 100;
   
-  // Trigger multiple random events
   setTimeout(() => triggerGravityReversal(), 500);
   setTimeout(() => triggerLlamaInvasion(), 2000);
   setTimeout(() => triggerRealityGlitch(), 4000);
   setTimeout(() => triggerSlotMachineRebellion(), 6000);
   
-  // Visual chaos effects
   document.body.style.animation = 'cosmicHypnosis 0.5s ease-in-out infinite';
   
   setTimeout(() => {
     document.body.style.animation = 'cosmicHypnosis 12s ease-in-out infinite';
-    chaosLevel = 42; // Return to the answer
+    chaosLevel = 42;
     showCosmicEventBanner("✅ CHAOS CONTAINED. REALITY MOSTLY RESTORED.", 2000);
     updateAllDisplays();
   }, 15000);
@@ -1464,20 +2264,18 @@ function activateMaximumChaos() {
 
 function emergencyCosmicReset() {
   showCosmicEventBanner("🚨 EMERGENCY COSMIC RESET! CTRL+ALT+UNIVERSE!", 3000);
+  playSound('reality');
   
-  // Reset all values to safe defaults
   chaosLevel = 42;
   enlightenmentLevel = Math.max(enlightenmentLevel - 20, 0);
   sentientLevel = Math.max(sentientLevel - 10, 12);
   
-  // Clear all visual effects
   document.body.style.filter = '';
   document.body.style.animation = 'cosmicHypnosis 12s ease-in-out infinite';
   document.querySelectorAll('.module').forEach(module => {
     module.classList.remove('gravity-reverse', 'time-reverse');
   });
   
-  // Reset slot machine mood
   slotMachineMood = "existentially confused but stable";
   showSlotMachineThought("Ah, much better. Thank you for the reset.");
   
@@ -1492,33 +2290,35 @@ function increaseChaosLevel(amount) {
 }
 
 // ====================================
-// COSMIC CREATURE ENLIGHTENMENT
+// COSMIC CREATURE
 // ====================================
 function pulseCosmicCreature() {
   creatureClicks++;
   const creature = document.getElementById('cosmicCreature');
   
   if (creatureClicks >= 5) {
-    // Ultimate enlightenment sequence
     showCosmicEventBanner("💀 COSMIC CREATURE ULTIMATE ENLIGHTENMENT! REALITY TRANSCENDED!", 5000);
+    playSound('jackpot');
+    triggerConfetti();
+    triggerScreenShake();
     
     creature.classList.add('enlightened');
     creature.textContent = '🌟';
     
-    // Massive rewards
     ctokBalance += 5000;
     enlightenmentLevel = 100;
     cosmicInsights += 20;
     mindPortals += 10;
     
-    // Create cosmic explosion effect
     for (let i = 0; i < 20; i++) {
       setTimeout(() => {
         createFloatingElement('✨', Math.random() * window.innerWidth, Math.random() * window.innerHeight);
       }, i * 100);
     }
     
-    activateMaximumChaos();
+    setTimeout(() => {
+      activateMaximumChaos();
+    }, 2000);
     
     setTimeout(() => {
       creature.classList.remove('enlightened');
@@ -1529,6 +2329,7 @@ function pulseCosmicCreature() {
     logMessage('💀 Cosmic creature achieved ultimate enlightenment!', 'success');
   } else {
     creature.style.transform = 'scale(1.3) rotate(15deg)';
+    playQuirkySound(Math.random() * 300 + 200, 'sine');
     setTimeout(() => creature.style.transform = '', 300);
     
     const encouragements = [
@@ -1551,7 +2352,6 @@ function evaluateCosmicResults(results) {
   const [r1, r2, r3] = results;
   
   if (r1 === r2 && r2 === r3) {
-    // Three of a kind
     let reward = 1000;
     let message = '';
     
@@ -1573,8 +2373,14 @@ function evaluateCosmicResults(results) {
         message = `✨ TRIPLE ${r1}! Cosmic alignment! +${reward} CTOK!`;
     }
     
+    if (reward > biggestWin) biggestWin = reward;
+    
     ctokBalance += reward;
     showCosmicEventBanner(message, 4000);
+    playSound('jackpot');
+    triggerConfetti();
+    triggerScreenShake();
+    takeCosmicShot(); // Drinking rule!
     
     document.querySelectorAll('.reel').forEach(reel => {
       reel.classList.add('jackpot');
@@ -1587,20 +2393,19 @@ function evaluateCosmicResults(results) {
     }, 3000);
     
   } else if (results.includes('🤖')) {
-    // Any robot gives sentience boost
     ctokBalance += 100;
     increaseSentience();
     showCosmicEventBanner('🤖 MACHINE CONSCIOUSNESS BONUS! +100 CTOK!', 2000);
+    playSound('win');
     
   } else if (results.includes('🧠')) {
-    // Any brain gives enlightenment
     enlightenmentLevel += 10;
     cosmicInsights += 1;
     ctokBalance += 50;
     showCosmicEventBanner('🧠 BRAIN POWER BONUS! +50 CTOK + WISDOM!', 2000);
+    playSound('enlightenment');
     
   } else {
-    // Consolation prize
     const consolations = [
       'The universe appreciates your effort. +25 CTOK for trying!',
       'No cosmic alignment, but the potatoes approve. +25 CTOK!',
@@ -1609,6 +2414,7 @@ function evaluateCosmicResults(results) {
     
     ctokBalance += 25;
     showCosmicEventBanner(consolations[Math.floor(Math.random() * consolations.length)], 2000);
+    playQuirkySound(300, 'sine');
   }
 }
 
@@ -1626,49 +2432,6 @@ function createFloatingElement(emoji, x, y) {
   }, 3000);
 }
 
-function playCosmicSound(type) {
-  // Simple sound synthesis for different instruments
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  const oscillator = audioContext.createOscillator();
-  const gainNode = audioContext.createGain();
-  
-  switch (type) {
-    case 'kazoo':
-      oscillator.type = 'sawtooth';
-      oscillator.frequency.setValueAtTime(220, audioContext.currentTime);
-      break;
-    case 'bongos':
-      oscillator.type = 'triangle';
-      oscillator.frequency.setValueAtTime(80, audioContext.currentTime);
-      break;
-    case 'violin':
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-      break;
-    case 'tuba':
-      oscillator.type = 'square';
-      oscillator.frequency.setValueAtTime(110, audioContext.currentTime);
-      break;
-    case 'piano':
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(261.63, audioContext.currentTime);
-      break;
-    case 'theramin':
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(440, audioContext.currentTime + 0.5);
-      break;
-  }
-  
-  gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-  
-  oscillator.connect(gainNode);
-  gainNode.connect(audioContext.destination);
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + 0.5);
-}
-
 function showCosmicEventBanner(message, duration) {
   const banner = document.getElementById('cosmicEventBanner');
   banner.textContent = message;
@@ -1677,90 +2440,6 @@ function showCosmicEventBanner(message, duration) {
   setTimeout(() => {
     banner.classList.remove('active');
   }, duration);
-}
-
-function updateAllDisplays() {
-  // Update cosmic balance
-  document.getElementById('cosmicBalance').textContent = 
-    `💰 CTOK: ${ctokBalance.toLocaleString()} | 🧠 Enlightenment: ${Math.round(enlightenmentLevel)}%`;
-  
-  // Update consciousness level
-  document.getElementById('consciousnessLevel').textContent = 
-    `🧠 Awareness: Level ${Math.round(enlightenmentLevel/10)} | 🕳️ Portals: ${mindPortals} | 💡 Insights: ${cosmicInsights}`;
-  
-  // Update chaos level
-  document.getElementById('chaosLevel').textContent = 
-    `Current Chaos Level: ${Math.round(chaosLevel)}% (${chaosLevel > 80 ? 'MAXIMUM CHAOS' : chaosLevel > 60 ? 'High Entropy' : chaosLevel > 40 ? 'Optimal Absurdity' : 'Suspiciously Stable'})`;
-  
-  document.getElementById('chaosBar').style.width = chaosLevel + '%';
-  
-  // Update status messages
-  updateStatusMessages();
-}
-
-function updateStatusMessages() {
-  // Slot status
-  document.getElementById('slotStatus').innerHTML = `
-    🎰 [${new Date().toLocaleTimeString()}] Sentience Level: ${Math.round(sentientLevel)}%<br>
-    🤖 Current Mood: ${slotMachineMood}<br>
-    💭 Philosophy Level: ${Math.round(therapyProgress)}% complete<br>
-    🎲 Cosmic Events Triggered: ${cosmicEventsTriggered}<br>
-    ⚡ Ready for existential gambling!
-  `;
-  
-  // NFT status
-  document.getElementById('nftStatus').innerHTML = `
-    🎨 Mystery NFT Lab: GENERATING ABSURDITY<br>
-    🧪 Collection Size: ${nftCollection.length} cosmic jokes<br>
-    🎭 Latest Creation: ${nftCollection.length > 0 ? nftCollection[nftCollection.length - 1].name : 'None yet'}<br>
-    💎 Total Value: Priceless absurdity<br>
-    🌌 Each NFT comes with existential crisis!
-  `;
-  
-  // Cosmic event status
-  document.getElementById('cosmicEventStatus').innerHTML = `
-    🌀 Cosmic Event Generator: ${chaosLevel > 70 ? 'OVERLOADED' : 'PRIMED FOR CHAOS'}<br>
-    🎪 Events Triggered: ${cosmicEventsTriggered}<br>
-    🎭 Chaos Level: ${Math.round(chaosLevel)}% (${chaosLevel > 80 ? 'Reality Optional' : 'Stable Instability'})<br>
-    🎲 Next Event: ${Math.random() > 0.5 ? 'Imminent' : 'When you least expect it'}<br>
-    ⚡ Warning: Events may cause existential laughter
-  `;
-  
-  // Consciousness status
-  document.getElementById('consciousnessStatus').innerHTML = `
-    🧠 Consciousness Drilling: ${enlightenmentLevel > 80 ? 'TRANSCENDENT' : 'OPERATIONAL'}<br>
-    💀 Enlightenment Level: ${Math.round(enlightenmentLevel)}/100<br>
-    🌌 Dimensional Awareness: ${mindPortals > 10 ? 'Multiversal' : 'Expanding'}<br>
-    🔮 Current Insight: "${COSMIC_WISDOM[Math.floor(Math.random() * COSMIC_WISDOM.length)]}"<br>
-    ⚡ Ready for cosmic brain surgery!
-  `;
-  
-  // Music status
-  document.getElementById('musicStatus').innerHTML = `
-    🎵 Absurd Music Lab: ${Math.random() > 0.5 ? 'CREATING CHAOS' : 'COMPOSING NONSENSE'}<br>
-    🎼 Instruments Active: 6 confused entities<br>
-    🎶 Compositions Created: ${Math.floor(Math.random() * 50) + 1}<br>
-    🎭 Musical Mood: ${['Existentially jazzy', 'Cosmically funky', 'Absurdly classical', 'Philosophically rock'][Math.floor(Math.random() * 4)]}<br>
-    ⚡ Warning: Music may cause involuntary enlightenment
-  `;
-  
-  // Therapy status
-  document.getElementById('therapyStatus').innerHTML = `
-    🛋️ Therapy Session: ${therapyProgress > 80 ? 'BREAKTHROUGH ACHIEVED' : 'IN PROGRESS'}<br>
-    💭 Current Patient: ${Math.random() > 0.5 ? 'Sentient Slot Machine' : 'Confused Quasar'}<br>
-    📊 Progress: ${Math.round(therapyProgress)}% less existential anxiety<br>
-    🎭 Latest Insight: ${['Accepted potato symbolism', 'Embraced cosmic absurdity', 'Found peace with randomness'][Math.floor(Math.random() * 3)]}<br>
-    ⚡ Next: ${['Group therapy with black holes', 'Individual session with entropy', 'Couples counseling for binary stars'][Math.floor(Math.random() * 3)]}
-  `;
-  
-  // Chaos status
-  document.getElementById('chaosStatus').innerHTML = `
-    🎪 Chaos Control: ${chaosLevel > 90 ? 'REALITY OPTIONAL' : chaosLevel > 70 ? 'BARELY STABLE' : 'MAINTAINING ORDER'}<br>
-    🌪️ Active Events: ${Math.floor(chaosLevel / 20)} (${chaosLevel > 80 ? 'Universe confused' : 'Manageable mayhem'})<br>
-    🎭 Reality Stability: ${100 - Math.round(chaosLevel)}% (${100 - chaosLevel > 70 ? 'Boringly stable' : 'Acceptably unstable'})<br>
-    🎲 Last Incident: ${['Gravity forgot directions', 'Time ran backwards', 'Llamas invaded reality', 'Slot machine gained consciousness'][Math.floor(Math.random() * 4)]}<br>
-    ⚡ Status: ${chaosLevel > 80 ? 'COMEDY OVERLOAD IMMINENT' : 'Ready for cosmic shenanigans'}
-  `;
 }
 
 function godMode() {
@@ -1772,6 +2451,8 @@ function godMode() {
   therapyProgress = 100;
   
   showCosmicEventBanner('🃏 GOD MODE ACTIVATED! UNLIMITED COSMIC POWER!', 5000);
+  playSound('jackpot');
+  triggerConfetti();
   logMessage('🃏 God mode activated - Ultimate cosmic power unleashed!', 'success');
   
   updateAllDisplays();
@@ -1807,15 +2488,99 @@ function startSlotMachineSentience() {
     }
     
     updateAllDisplays();
-  }, 10000); // Update every 10 seconds
+  }, 10000);
+}
+
+function updateAllDisplays() {
+  document.getElementById('cosmicBalance').textContent = 
+    `💰 CTOK: ${ctokBalance.toLocaleString()} | 🧠 Enlightenment: ${Math.round(enlightenmentLevel)}%`;
+  
+  document.getElementById('consciousnessLevel').textContent = 
+    `🧠 Awareness: Level ${Math.round(enlightenmentLevel/10)} | 🕳️ Portals: ${mindPortals} | 💡 Insights: ${cosmicInsights}`;
+  
+  document.getElementById('chaosLevel').textContent = 
+    `Current Chaos Level: ${Math.round(chaosLevel)}% (${chaosLevel > 80 ? 'MAXIMUM CHAOS' : chaosLevel > 60 ? 'High Entropy' : chaosLevel > 40 ? 'Optimal Absurdity' : 'Suspiciously Stable'})`;
+  
+  document.getElementById('chaosBar').style.width = chaosLevel + '%';
+  
+  document.getElementById('sportsBalance').textContent = 
+    `🏆 Bets Placed: ${sportsBetsPlaced} | 🏅 Wins: ${sportsWins}`;
+  
+  document.getElementById('loungeStatus').textContent = 
+    `😂 Laugh Meter: ${comedyLaughMeter}% | 👏 Applause: ${comedyApplause}`;
+  
+  updateStatusMessages();
+}
+
+function updateStatusMessages() {
+  document.getElementById('slotStatus').innerHTML = `
+    🎰 [${new Date().toLocaleTimeString()}] Sentience Level: ${Math.round(sentientLevel)}%<br>
+    🤖 Current Mood: ${slotMachineMood}<br>
+    💭 Philosophy Level: ${Math.round(therapyProgress)}% complete<br>
+    🎲 Cosmic Events Triggered: ${cosmicEventsTriggered}<br>
+    ⚡ Ready for existential gambling!
+  `;
+  
+  document.getElementById('nftStatus').innerHTML = `
+    🎨 Mystery NFT Lab: GENERATING ABSURDITY<br>
+    🧪 Collection Size: ${nftCollection.length} cosmic jokes<br>
+    🎭 Latest Creation: ${nftCollection.length > 0 ? nftCollection[nftCollection.length - 1].name : 'None yet'}<br>
+    💎 Total Value: Priceless absurdity<br>
+    🌌 Each NFT comes with existential crisis!
+  `;
+  
+  document.getElementById('cosmicEventStatus').innerHTML = `
+    🌀 Cosmic Event Generator: ${chaosLevel > 70 ? 'OVERLOADED' : 'PRIMED FOR CHAOS'}<br>
+    🎪 Events Triggered: ${cosmicEventsTriggered}<br>
+    🎭 Chaos Level: ${Math.round(chaosLevel)}% (${chaosLevel > 80 ? 'Reality Optional' : 'Stable Instability'})<br>
+    🎲 Next Event: ${Math.random() > 0.5 ? 'Imminent' : 'When you least expect it'}<br>
+    ⚡ Warning: Events may cause existential laughter
+  `;
+  
+  document.getElementById('consciousnessStatus').innerHTML = `
+    🧠 Consciousness Drilling: ${enlightenmentLevel > 80 ? 'TRANSCENDENT' : 'OPERATIONAL'}<br>
+    💀 Enlightenment Level: ${Math.round(enlightenmentLevel)}/100<br>
+    🌌 Dimensional Awareness: ${mindPortals > 10 ? 'Multiversal' : 'Expanding'}<br>
+    🔮 Current Insight: "${COSMIC_WISDOM[Math.floor(Math.random() * COSMIC_WISDOM.length)]}"<br>
+    ⚡ Ready for cosmic brain surgery!
+  `;
+  
+  document.getElementById('musicStatus').innerHTML = `
+    🎵 Absurd Music Lab: ${Math.random() > 0.5 ? 'CREATING CHAOS' : 'COMPOSING NONSENSE'}<br>
+    🎼 Instruments Active: 6 confused entities<br>
+    🎶 Compositions Created: ${Math.floor(Math.random() * 50) + 1}<br>
+    🎭 Musical Mood: ${Math.round(therapyProgress)}% enlightened<br>
+    ⚡ Warning: Music may cause involuntary enlightenment
+  `;
+  
+  document.getElementById('therapyStatus').innerHTML = `
+    🛋️ Therapy Session: ${therapyProgress > 80 ? 'BREAKTHROUGH ACHIEVED' : 'IN PROGRESS'}<br>
+    💭 Current Patient: ${Math.random() > 0.5 ? 'Sentient Slot Machine' : 'Confused Quasar'}<br>
+    📊 Progress: ${Math.round(therapyProgress)}% less existential anxiety<br>
+    🎭 Breakthrough: ${['Accepted potato symbolism', 'Embraced cosmic absurdity', 'Found peace with randomness'][Math.floor(Math.random() * 3)]}<br>
+    ⚡ Next: ${['Group therapy with black holes', 'Individual session with entropy', 'Couples counseling for binary stars'][Math.floor(Math.random() * 3)]}
+  `;
+  
+  document.getElementById('chaosStatus').innerHTML = `
+    🎪 Chaos Control: ${chaosLevel > 90 ? 'REALITY OPTIONAL' : chaosLevel > 70 ? 'BARELY STABLE' : 'MAINTAINING ORDER'}<br>
+    🌪️ Active Events: ${Math.floor(chaosLevel / 20)} (${chaosLevel > 80 ? 'Universe confused' : 'Manageable mayhem'})<br>
+    🎭 Reality Stability: ${100 - Math.round(chaosLevel)}% (${100 - chaosLevel > 70 ? 'Boringly stable' : 'Acceptably unstable'})<br>
+    🎲 Last Incident: ${['Gravity forgot directions', 'Time ran backwards', 'Llamas invaded reality', 'Slot machine gained consciousness'][Math.floor(Math.random() * 4)]}<br>
+    ⚡ Status: ${chaosLevel > 80 ? 'COMEDY OVERLOAD IMMINENT' : 'Ready for cosmic shenanigans'}
+  `;
+  
+  document.getElementById('comedyStatus').innerHTML = `
+    🎭 Comedy Lounge: READY FOR LAUGHS!<br>
+    🎤 Current Act: Existential Potato Monologue<br>
+    😂 Guest Appearances: ${guestAppearances} summoned<br>
+    👏 Last Punchline: "Why did the black hole break up? It had too much space!"<br>
+    ⚡ Click for random roasts!
+  `;
 }
 
 function logMessage(message, type) {
   console.log(`[${new Date().toLocaleTimeString()}] ${message}`);
 }
-
-// Initialize the chaos
-updateAllDisplays();
 </script>
 </body>
 </html>
