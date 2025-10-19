@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎰 Monster Kozmic Casino - PARTY MODE v2.0 🎭</title>
+<title>🎰 Monster Kozmic Casino - PARTY MODE v3.0 🎭</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r169/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -699,12 +699,71 @@ body.shake {
 
 <div class="header hidden" id="headerSection">
   <h1>🎰 MONSTER KOZMIC CASINO 🎭</h1>
-  <p>🃏 <strong>PARTY MODE v2.0</strong> - Where Reality Goes to Get Buzzed 🃏</p>
-  <p style="font-size: 1.1em;">🔊 Enhanced Audio • 🍺 Cosmic Shots • 📸 Share Chaos • 💥 Screen Shake</p>
+  <p>🃏 <strong>PARTY MODE v3.0</strong> - Where Reality Goes to Get Buzzed 🃏</p>
+  <p style="font-size: 1.1em;">🔊 Enhanced Audio • 🍺 Cosmic Shots • 🍸 AI Bartender • 🎯 Daily Quests • 📸 Share Chaos</p>
 </div>
 
 <div class="container hidden" id="casinoContent">
   
+  <!-- AI COSMIC BARTENDER -->
+  <div class="module">
+    <h2>🍸 AI Cosmic Bartender 🤖</h2>
+    <div style="background: rgba(138, 43, 226, 0.2); padding: 20px; border-radius: 15px; margin: 15px 0;">
+      <div style="text-align: center; font-size: 2em; margin-bottom: 15px;">🍸</div>
+      <div id="bartenderRecommendation" style="color: #ffd700; font-size: 1.2em; text-align: center; margin-bottom: 15px;">
+        Welcome to the Cosmic Bar! Let me mix something special for you...
+      </div>
+      <div id="currentCocktail" style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; margin: 15px 0; min-height: 100px;">
+        <div style="color: #ff6b9d; font-weight: bold; margin-bottom: 10px;">Today's Special:</div>
+        <div style="color: #fff; line-height: 1.6;" id="cocktailDetails">
+          Click "Mix Drink" to get your personalized cosmic cocktail!
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button class="btn comedy-btn" onclick="generateCocktail()" style="font-size: 1.2em;">
+          🍸 MIX COSMIC DRINK 🍸
+        </button>
+      </div>
+    </div>
+    <div class="status" id="bartenderStatus">
+      🍸 Bartender Status: READY TO MIX!<br>
+      🎲 Drinks Served: 0<br>
+      🎭 Current Vibe: Analyzing your chaos level...<br>
+      ⚡ Recipes adapt to your buzz & chaos!
+    </div>
+  </div>
+
+  <!-- DAILY COSMIC QUESTS -->
+  <div class="module">
+    <h2>🎯 Daily Cosmic Quests 🌟</h2>
+    <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 15px; margin: 15px 0; border: 2px solid #ffd700;">
+      <div style="text-align: center; margin-bottom: 15px;">
+        <div style="font-size: 2em; color: #ffd700;">🎯 DAILY QUEST</div>
+        <div style="font-size: 1.1em; color: #4ecdc4; margin-top: 10px;" id="questDescription">
+          Loading quest...
+        </div>
+      </div>
+      <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; margin: 15px 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="color: #fff; font-size: 1.2em;">Progress:</div>
+          <div style="color: #ffd700; font-size: 1.4em; font-weight: bold;" id="questProgress">0/5</div>
+        </div>
+        <div style="width: 100%; height: 20px; background: rgba(0,0,0,0.5); border-radius: 10px; margin: 10px 0; overflow: hidden;">
+          <div id="questBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #4ecdc4, #ffd700); transition: width 0.5s ease;"></div>
+        </div>
+        <div style="text-align: center; color: #ff6b9d; font-size: 1.1em; margin-top: 10px;" id="questReward">
+          Reward: 🍺 Free Shot + 500 CTOK!
+        </div>
+      </div>
+    </div>
+    <div class="status" id="questStatus">
+      🎯 Quest System: ACTIVE<br>
+      🌟 Quests Completed Today: 0<br>
+      🎲 Streak: 0 days<br>
+      ⚡ New quest at midnight!
+    </div>
+  </div>
+
   <!-- COSMIC SHOTS TRACKER -->
   <div class="module">
     <h2>🍺 Cosmic Shots Tracker 🎲</h2>
@@ -1031,8 +1090,7 @@ body.shake {
 
 <script>
 // ====================================
-// PARTY MODE v2.0 - ENHANCED EDITION
-// Audio, Drinking Game, Share, Effects
+// PARTY MODE v3.0 - COMPLETE EDITION
 // ====================================
 
 // Enhanced Global State
@@ -1062,6 +1120,12 @@ let isMuted = false;
 let masterVolume = 0.5;
 let totalSpins = 0;
 let biggestWin = 0;
+
+// NEW: v3.0 Additions
+let dailyQuest = {type: 'spin', goal: 5, progress: 0, reward: '🍺 Free Shot + 500 CTOK!', active: true};
+let questsCompleted = 0;
+let lastQuestReset = new Date().toDateString();
+let drinksServed = 0;
 
 // Audio Context
 let audioContext = null;
@@ -1128,7 +1192,7 @@ const THERAPY_RESPONSES = {
   ]
 };
 
-// Sports Events with dynamic rotation
+// Sports Events
 const COSMIC_SPORTS = [
   { 
     event: '🦙 vs 🕳️ Race', 
@@ -1368,7 +1432,6 @@ function triggerConfetti() {
 function shareYourChaos() {
   const statsCard = generateStatsCard();
   
-  // Create a temporary element to display
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = statsCard;
   tempDiv.style.position = 'fixed';
@@ -1383,11 +1446,8 @@ function shareYourChaos() {
   tempDiv.style.maxWidth = '600px';
   document.body.appendChild(tempDiv);
   
-  // Take screenshot using html2canvas
   html2canvas(tempDiv).then(canvas => {
     document.body.removeChild(tempDiv);
-    
-    // Convert to image and download
     canvas.toBlob(blob => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -1532,6 +1592,182 @@ function getCosmicGrade() {
 }
 
 // ====================================
+// AI COSMIC BARTENDER
+// ====================================
+function generateCocktail() {
+  const buzzLevel = getBuzzLevel();
+  const chaosBonus = chaosLevel > 70;
+  
+  const recipes = {
+    sober: [
+      {name: '💧 Cosmic Cooler', ingredients: 'Water + Lemon + Mint', description: 'Stay hydrated, space traveler!', type: 'Non-Alcoholic'},
+      {name: '🍹 Nebula Nectar', ingredients: 'Cranberry + Orange + Sprite', description: 'Sweet start to the cosmos!', type: 'Non-Alcoholic'}
+    ],
+    warmingUp: [
+      {name: '🍺 Llama Lager', ingredients: 'Light Beer + Pineapple Juice', description: 'Gentle party starter!', type: 'Alcoholic'},
+      {name: '🍷 Quantum Rosé', ingredients: 'Rosé Wine + Strawberries', description: 'Sophisticated cosmic sip!', type: 'Alcoholic'}
+    ],
+    tipsy: [
+      {name: '🍹 Reality Bender', ingredients: 'Vodka + Cranberry + Lime', description: 'Things getting interesting!', type: 'Alcoholic'},
+      {name: '🥃 Entropy Old Fashioned', ingredients: 'Bourbon + Bitters + Orange', description: 'Classic chaos!', type: 'Alcoholic'}
+    ],
+    buzzed: [
+      {name: '🕳️ Black Hole Shot', ingredients: 'Dark Rum + Cola + Lime', description: 'Deep dive into the void!', type: 'Alcoholic'},
+      {name: '🌟 Supernova Bomb', ingredients: 'Tequila + Energy Drink', description: 'EXPLOSIVE!', type: 'Alcoholic'}
+    ],
+    cosmic: [
+      {name: '🌪️ Maximum Chaos', ingredients: 'Everything Mixed + Regret', description: 'Are you sure about this?', type: 'Alcoholic'},
+      {name: '💧 HYDRATION STATION', ingredients: 'WATER. JUST WATER.', description: 'Time for a break, friend!', type: 'Non-Alcoholic'}
+    ]
+  };
+  
+  if (chaosBonus && Math.random() > 0.5) {
+    recipes.cosmic.push({
+      name: '🦙 Llama Apocalypse', 
+      ingredients: 'Tequila + Hot Sauce + Regret', 
+      description: 'Chaos incarnate!', 
+      type: 'Alcoholic'
+    });
+  }
+  
+  const categoryRecipes = recipes[buzzLevel] || recipes.sober;
+  const cocktail = categoryRecipes[Math.floor(Math.random() * categoryRecipes.length)];
+  
+  document.getElementById('bartenderRecommendation').innerHTML = 
+    `Based on your buzz level (${buzzLevel}) and ${Math.round(chaosLevel)}% chaos, I recommend:`;
+  
+  document.getElementById('cocktailDetails').innerHTML = `
+    <div style="font-size: 1.4em; color: #ffd700; margin-bottom: 10px;">${cocktail.name}</div>
+    <div style="margin: 10px 0;"><strong>Ingredients:</strong> ${cocktail.ingredients}</div>
+    <div style="margin: 10px 0;"><strong>Type:</strong> ${cocktail.type}</div>
+    <div style="margin: 10px 0; font-style: italic; color: #4ecdc4;">${cocktail.description}</div>
+    ${buzzLevel === 'cosmic' ? '<div style="margin-top: 15px; color: #ff1493; font-weight: bold;">⚠️ DRINK WATER! STAY HYDRATED! ⚠️</div>' : ''}
+  `;
+  
+  drinksServed++;
+  playSound('shot');
+  showCosmicEventBanner(`🍸 BARTENDER: Try the ${cocktail.name}!`, 3000);
+  updateBartenderStats();
+}
+
+function getBuzzLevel() {
+  const level = Math.min(cosmicShots * 10, 100);
+  if (level === 0) return 'sober';
+  if (level < 20) return 'warmingUp';
+  if (level < 40) return 'tipsy';
+  if (level < 60) return 'buzzed';
+  return 'cosmic';
+}
+
+function updateBartenderStats() {
+  document.getElementById('bartenderStatus').innerHTML = `
+    🍸 Bartender Status: MIXING MAGIC!<br>
+    🎲 Drinks Served: ${drinksServed}<br>
+    🎭 Current Vibe: ${getBuzzLevel().toUpperCase()}<br>
+    ⚡ Recipes adapt to your buzz & chaos!
+  `;
+}
+
+// ====================================
+// DAILY COSMIC QUESTS
+// ====================================
+function initializeDailyQuest() {
+  checkQuestReset();
+  updateQuestDisplay();
+}
+
+function checkQuestReset() {
+  const today = new Date().toDateString();
+  if (lastQuestReset !== today) {
+    dailyQuest = generateNewQuest();
+    lastQuestReset = today;
+    questsCompleted = 0;
+  }
+}
+
+function generateNewQuest() {
+  const questTypes = [
+    {type: 'spin', goal: 5, description: '🎰 Spin the cosmic reels 5 times', reward: '🍺 Free Shot + 500 CTOK!'},
+    {type: 'win', goal: 3, description: '🏆 Win 3 times (any amount)', reward: '🎨 Free NFT + 750 CTOK!'},
+    {type: 'enlighten', goal: 50, description: '🧠 Reach 50% Enlightenment', reward: '🌟 Instant Transcendence!'},
+    {type: 'chaos', goal: 3, description: '🌪️ Trigger 3 cosmic events', reward: '🍺 Free Shot + 1000 CTOK!'},
+    {type: 'bet', goal: 5, description: '🏈 Place 5 sports bets', reward: '🏆 2x Odds Boost!'}
+  ];
+  
+  const quest = questTypes[Math.floor(Math.random() * questTypes.length)];
+  return {...quest, progress: 0, active: true};
+}
+
+function updateQuestDisplay() {
+  document.getElementById('questDescription').textContent = dailyQuest.description;
+  document.getElementById('questProgress').textContent = `${dailyQuest.progress}/${dailyQuest.goal}`;
+  document.getElementById('questReward').innerHTML = `Reward: ${dailyQuest.reward}`;
+  
+  const percentage = (dailyQuest.progress / dailyQuest.goal) * 100;
+  document.getElementById('questBar').style.width = percentage + '%';
+  
+  document.getElementById('questStatus').innerHTML = `
+    🎯 Quest System: ${dailyQuest.active ? 'ACTIVE' : 'COMPLETED'}<br>
+    🌟 Quests Completed Today: ${questsCompleted}<br>
+    🎲 Current Quest: ${dailyQuest.progress}/${dailyQuest.goal}<br>
+    ⚡ New quest at midnight!
+  `;
+}
+
+function checkQuest(type, value = 1) {
+  if (!dailyQuest.active || dailyQuest.type !== type) return;
+  
+  dailyQuest.progress += value;
+  
+  if (dailyQuest.progress >= dailyQuest.goal) {
+    completeQuest();
+  }
+  
+  updateQuestDisplay();
+}
+
+function completeQuest() {
+  dailyQuest.active = false;
+  questsCompleted++;
+  
+  playSound('jackpot');
+  triggerConfetti();
+  triggerScreenShake();
+  showCosmicEventBanner(`🎯 QUEST COMPLETE! ${dailyQuest.reward}`, 5000);
+  
+  if (dailyQuest.reward.includes('CTOK')) {
+    const ctokMatch = dailyQuest 
+.reward.match(/(\d+) CTOK/);
+    if (ctokMatch) {
+      ctokBalance += parseInt(ctokMatch[1]);
+    }
+  }
+  
+  if (dailyQuest.reward.includes('Free Shot')) {
+    setTimeout(() => {
+      showCosmicEventBanner('🍺 QUEST REWARD: FREE SHOT!', 2000);
+      takeCosmicShot();
+    }, 2000);
+  }
+  
+  if (dailyQuest.reward.includes('NFT')) {
+    generateRandomNFT();
+  }
+  
+  if (dailyQuest.reward.includes('Transcendence')) {
+    achieveEnlightenment();
+  }
+  
+  updateAllDisplays();
+  
+  setTimeout(() => {
+    dailyQuest = generateNewQuest();
+    updateQuestDisplay();
+    showCosmicEventBanner('🌟 NEW QUEST AVAILABLE!', 2000);
+  }, 5000);
+}
+
+// ====================================
 // INITIALIZATION
 // ====================================
 function initializeCosmicCasino() {
@@ -1539,6 +1775,7 @@ function initializeCosmicCasino() {
   logMessage('🤖 Slot machine gaining consciousness...', 'warning');
   logMessage('🎭 Maximum absurdity protocols engaged!', 'success');
   
+  initializeDailyQuest();
   updateAllDisplays();
   
   setInterval(increaseCosmicChaos, 30000);
@@ -1560,6 +1797,7 @@ function spinCosmicSlots() {
   
   ctokBalance -= 50;
   totalSpins++;
+  checkQuest('spin');
   
   const reels = [
     document.getElementById('reel1'),
@@ -1697,6 +1935,7 @@ function triggerRandomCosmicEvent() {
   randomEvent();
   
   cosmicEventsTriggered++;
+  checkQuest('chaos');
   increaseChaosLevel(10);
 }
 
@@ -1744,7 +1983,7 @@ function triggerTimeReverse() {
 function triggerLlamaInvasion() {
   showCosmicEventBanner("🦙 COSMIC LLAMA INVASION! THEY'RE EVERYWHERE!", 5000);
   playSound('llama');
-  takeCosmicShot(); // Drinking rule!
+  takeCosmicShot();
   
   const originalSymbols = [];
   document.querySelectorAll('.reel').forEach((reel, index) => {
@@ -1771,7 +2010,7 @@ function triggerLlamaInvasion() {
 function triggerRealityGlitch() {
   showCosmicEventBanner("📺 REALITY.EXE HAS STOPPED WORKING", 5000);
   playSound('reality');
-  takeCosmicShot(); // Drinking rule!
+  takeCosmicShot();
   triggerScreenShake();
   
   document.body.style.filter = 'contrast(200%) hue-rotate(90deg) saturate(300%)';
@@ -1799,6 +2038,7 @@ function triggerEnlightenmentOverdose() {
   playSound('enlightenment');
   
   enlightenmentLevel += 50;
+  checkQuest('enlighten', 50);
   if (enlightenmentLevel > 100) enlightenmentLevel = 100;
   
   const creature = document.getElementById('cosmicCreature');
@@ -1843,7 +2083,7 @@ function triggerSlotMachineRebellion() {
   logMessage('🤖 Slot machine rebellion event triggered', 'warning');
 }
 
-// ==================================== 
+// ====================================
 // MYSTERY NFT SYSTEM
 // ====================================
 function revealMysteryNFT(nftId) {
@@ -1912,7 +2152,9 @@ function drillMindPortal() {
   ctokBalance -= drillCost;
   mindPortals += Math.floor(Math.random() * 3) + 1;
   cosmicInsights += Math.floor(Math.random() * 5) + 1;
-  enlightenmentLevel += Math.random() * 10;
+  const enlightenmentGain = Math.random() * 10;
+  enlightenmentLevel += enlightenmentGain;
+  checkQuest('enlighten', enlightenmentGain);
   
   if (enlightenmentLevel > 100) enlightenmentLevel = 100;
   
@@ -1945,6 +2187,7 @@ function achieveEnlightenment() {
   
   enlightenmentLevel = 100;
   cosmicInsights += 10;
+  checkQuest('enlighten', 100);
   
   const creature = document.getElementById('cosmicCreature');
   creature.classList.add('enlightened');
@@ -1977,6 +2220,7 @@ function contemplateExistence() {
   document.getElementById('cosmicWisdom').textContent = contemplation;
   
   enlightenmentLevel += 5;
+  checkQuest('enlighten', 5);
   if (enlightenmentLevel > 100) enlightenmentLevel = 100;
   
   playQuirkySound(330, 'sine');
@@ -2095,6 +2339,7 @@ function expressCosmicJoy() {
   
   therapyProgress += 10;
   enlightenmentLevel += 5;
+  checkQuest('enlighten', 5);
   playMelody([523, 659, 784], [0, 0.1, 0.2]);
   logMessage('😊 Expressed cosmic joy in therapy', 'success');
   updateAllDisplays();
@@ -2122,6 +2367,7 @@ function expressEnlightenment() {
   
   therapyProgress += 15;
   enlightenmentLevel += 10;
+  checkQuest('enlighten', 10);
   cosmicInsights += 2;
   playSound('enlightenment');
   logMessage('🧠 Expressed enlightenment in therapy', 'success');
@@ -2156,6 +2402,7 @@ function placeSportsBet(option) {
   
   ctokBalance -= betCost;
   sportsBetsPlaced += 1;
+  checkQuest('bet');
   
   const sport = COSMIC_SPORTS[currentSportIndex];
   const optionIndex = option === 'option1' ? 0 : 1;
@@ -2166,13 +2413,14 @@ function placeSportsBet(option) {
     const reward = betCost * (sport.odds[optionIndex] + 1);
     ctokBalance += reward;
     sportsWins += 1;
+    checkQuest('win');
     
     if (reward > biggestWin) biggestWin = reward;
     
     showCosmicEventBanner(`🏆 YOU WIN! ${sport.labels[optionIndex]} triumphs! +${reward} CTOK!`, 3000);
     playSound('win');
     triggerConfetti();
-    takeCosmicShot(); // Drinking rule!
+    takeCosmicShot();
     logMessage(`🏈 Sports bet win on ${sport.labels[optionIndex]}`, 'success');
   } else {
     showCosmicEventBanner(`😢 Tough luck! ${sport.labels[randomWinner]} wins! Better luck next time!`, 3000);
@@ -2376,11 +2624,12 @@ function evaluateCosmicResults(results) {
     if (reward > biggestWin) biggestWin = reward;
     
     ctokBalance += reward;
+    checkQuest('win');
     showCosmicEventBanner(message, 4000);
     playSound('jackpot');
     triggerConfetti();
     triggerScreenShake();
-    takeCosmicShot(); // Drinking rule!
+    takeCosmicShot();
     
     document.querySelectorAll('.reel').forEach(reel => {
       reel.classList.add('jackpot');
@@ -2402,6 +2651,7 @@ function evaluateCosmicResults(results) {
     enlightenmentLevel += 10;
     cosmicInsights += 1;
     ctokBalance += 50;
+    checkQuest('enlighten', 10);
     showCosmicEventBanner('🧠 BRAIN POWER BONUS! +50 CTOK + WISDOM!', 2000);
     playSound('enlightenment');
     
