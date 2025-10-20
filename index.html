@@ -970,3 +970,135 @@ body.shake {
 <!-- END OF SECTION 2: HTML MODULES (PART 1) -->
 <!-- NEXT: Section 3 (Remaining HTML Modules) -->
 <!-- ========================================== -->
+<!-- ABSURD MUSIC STUDIO -->
+  <div class="module">
+    <h2>🎵 Absurd Music Laboratory 🧪</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 15px 0;">
+      <button class="btn" onclick="playCosmicKazoo()">🎺 COSMIC KAZOO</button>
+      <button class="btn" onclick="playQuantumBongos()">🥁 QUANTUM BONGOS</button>
+      <button class="btn" onclick="playExistentialViolin()">🎻 EXISTENTIAL VIOLIN</button>
+      <button class="btn" onclick="playSarcasticTuba()">🎷 SARCASTIC TUBA</button>
+      <button class="btn" onclick="playConfusedPiano()">🎹 CONFUSED PIANO</button>
+      <button class="btn" onclick="playOptimisticTheramin()">🎶 HAPPY THERAMIN</button>
+    </div>
+    <div style="background: rgba(138, 43, 226, 0.2); padding: 15px; border-radius: 10px; margin: 15px 0;">
+      <div style="color: #ff6b9d; margin-bottom: 10px;">🎼 Absurd Composition Generator:</div>
+      <button class="btn comedy-btn" onclick="generateAbsurdSong()" style="width: 100%;">
+        🎵 GENERATE COSMIC NONSENSE SONG 🎵
+      </button>
+      <div id="absurdComposition" style="margin-top: 10px; font-style: italic; color: #ffd700;">
+        Click to generate your next musical masterpiece!
+      </div>
+    </div>
+    <div class="status" id="musicStatus">
+      🎵 Absurd Music Lab: CREATING CHAOS<br>
+      🎼 Instruments Active: 6 confused entities<br>
+      🎶 Last Composition: "Ode to a Melancholy Spoon"<br>
+      🎭 Musical Mood: Existentially jazzy<br>
+      ⚡ Warning: Music may cause involuntary enlightenment
+    </div>
+  </div>
+
+  <!-- COSMIC THERAPY SESSION -->
+  <div class="module">
+    <h2>🛋️ Cosmic Therapy Center 💭</h2>
+    <div style="background: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 15px; margin: 15px 0;">
+      <div style="color: #4ecdc4; margin-bottom: 15px; font-size: 1.2em;">Dr. Cosmic is in:</div>
+      <div id="therapySession" style="color: #fff; line-height: 1.6; margin-bottom: 15px;">
+        "Welcome to cosmic therapy. How does existing in an infinite universe make you feel? Remember, there are no wrong answers, only quantum possibilities."
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+        <button class="btn" onclick="expressExistentialDread()">😰 EXISTENTIAL DREAD</button>
+        <button class="btn" onclick="expressCosmicJoy()">😊 COSMIC JOY</button>
+        <button class="btn" onclick="expressConfusion()">🤔 TOTAL CONFUSION</button>
+        <button class="btn" onclick="expressEnlightenment()">🧠 ENLIGHTENMENT</button>
+      </div>
+    </div>
+    <div class="status" id="therapyStatus">
+      🛋️ Therapy Session: IN PROGRESS<br>
+      💭 Current Patient: Sentient Slot Machine<br>
+      📊 Progress: 23% less existential anxiety<br>
+      🎭 Breakthrough: Accepted potato symbolism<br>
+      ⚡ Next: Group therapy with confused quasars
+    </div>
+  </div>
+
+  <!-- ULTIMATE CHAOS CONTROL -->
+  <div class="module">
+    <h2>🎪 Ultimate Chaos Control 🌪️</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;">
+      <button class="btn comedy-btn" onclick="activateMaximumChaos()">🌪️ MAXIMUM CHAOS</button>
+      <button class="btn" onclick="emergencyCosmicReset()">🚨 EMERGENCY RESET</button>
+    </div>
+    <div style="background: rgba(255, 20, 147, 0.2); padding: 15px; border-radius: 10px; margin: 15px 0;">
+      <div style="color: #ff1493; font-weight: bold; margin-bottom: 10px;">⚠️ CHAOS WARNING SYSTEM ⚠️</div>
+      <div id="chaosLevel" style="color: #ffd700;">
+        Current Chaos Level: 42% (The Answer to Everything)
+      </div>
+      <div style="width: 100%; height: 20px; background: rgba(0,0,0,0.5); border-radius: 10px; margin: 10px 0; overflow: hidden;">
+        <div id="chaosBar" style="height: 100%; width: 42%; background: linear-gradient(90deg, #00ff00, #ffff00, #ff0000); transition: width 0.5s ease;"></div>
+      </div>
+    </div>
+    <div class="status" id="chaosStatus">
+      🎪 Chaos Control: BARELY MAINTAINING ORDER<br>
+      🌪️ Chaos Events Active: 3 (Manageable mayhem)<br>
+      🎭 Reality Stability: 68% (Acceptably unstable)<br>
+      🎲 Last Incident: Gravity forgot how to work for 3 seconds<br>
+      ⚡ Brace for impact: Comedy overload imminent
+    </div>
+  </div>
+
+  <!-- SPORTS BAR -->
+  <div class="module">
+    <h2>🏈 Cosmic Sports Bar 🚀</h2>
+    <div class="cosmic-balance" id="sportsBalance">🏆 Bets Placed: 0 | 🏅 Wins: 0</div>
+    <div style="text-align: center; margin: 20px 0;">
+      <p id="currentSportEvent">Bet on absurd cosmic sports!</p>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px;">
+        <button class="btn comedy-btn" onclick="placeSportsBet('option1')" id="sportsBtn1">Place Bet!</button>
+        <button class="btn comedy-btn" onclick="placeSportsBet('option2')" id="sportsBtn2">Place Bet!</button>
+      </div>
+    </div>
+    <div class="prize-display" id="sportsResult">
+      🌟 Welcome to Cosmic Sports! Place a bet to start the madness! 🌟
+    </div>
+    <div class="status" id="sportsStatus">
+      🏈 Cosmic Sports Bar: OPEN FOR BETS!<br>
+      🚀 Current Event: Loading...<br>
+      🎲 Odds: TBD<br>
+      🏆 Last Winner: Confused Quasar (by accident)<br>
+      ⚡ Bet 100 CTOK to play!
+    </div>
+  </div>
+
+  <!-- THEATER FOR COMEDY LOUNGE WITH GUEST APPEARANCES -->
+  <div class="module">
+    <h2>🎭 Cosmic Comedy Lounge Theater 🎤</h2>
+    <div class="cosmic-balance" id="loungeStatus">😂 Laugh Meter: 0% | 👏 Applause: 0</div>
+    <div style="text-align: center; margin: 20px 0;">
+      <p>Watch absurd comedy acts! Trigger guest appearances for special shows!</p>
+      <button class="btn comedy-btn" onclick="startComedyShow()">Start Comedy Show! 🤣</button>
+      <button class="btn comedy-btn" onclick="summonGuestAppearance()">Summon Guest Star! 🌟</button>
+    </div>
+    <div class="prize-display" id="comedyStage">
+      🌟 The stage is set! Start a show for cosmic laughs! 🌟
+    </div>
+    <div class="status" id="comedyStatus">
+      🎭 Comedy Lounge: READY FOR LAUGHS!<br>
+      🎤 Current Act: Existential Potato Monologue<br>
+      😂 Guest Appearances: 0 summoned<br>
+      👏 Last Punchline: "Why did the black hole break up? It had too much space!"<br>
+      ⚡ Click for random roasts!
+    </div>
+  </div>
+</div>
+
+<!-- COSMIC CREATURE WITH ENLIGHTENMENT -->
+<div class="cosmic-creature hidden" id="cosmicCreature" onclick="pulseCosmicCreature()" title="Click 5 times for ULTIMATE ENLIGHTENMENT!">
+  💀
+</div>
+
+<!-- ========================================== -->
+<!-- END OF SECTION 3: ALL HTML MODULES COMPLETE -->
+<!-- NEXT: Section 4 (JavaScript Start) -->
+<!-- ========================================== -->
