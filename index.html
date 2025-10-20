@@ -679,3 +679,294 @@ body.shake {
 <!-- END OF SECTION 1: CSS COMPLETE -->
 <!-- NEXT: Paste Section 2 (HTML Body Start) -->
 <!-- ========================================== -->
+<body>
+
+<!-- Audio Controls -->
+<div class="audio-controls hidden" id="audioControls">
+  <button onclick="toggleMute()">🔊 Mute</button>
+  <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider" oninput="changeVolume(this.value)">
+  <div style="color: #ffd700; font-size: 12px;">Volume: <span id="volumeDisplay">50</span>%</div>
+</div>
+
+<!-- Age Verification Modal -->
+<div id="ageModal">
+  <div id="ageContent">
+    <h2>🎰 Age Verification 🎰</h2>
+    <p>This cosmic casino is for users 21 and over.</p>
+    <p>Are you at least 21 years old?</p>
+    <button class="btn" onclick="verifyAge(true)">Yes, I'm 21+</button>
+    <button class="btn" onclick="verifyAge(false)">No, I'm Under 21</button>
+  </div>
+</div>
+
+<div class="cosmic-event-banner" id="cosmicEventBanner">
+  🌌 COSMIC EVENT: Loading Universe... 🌌
+</div>
+
+<div class="header hidden" id="headerSection">
+  <h1>🎰 MONSTER KOZMIC CASINO 🎭</h1>
+  <p>🃏 <strong>PARTY MODE v3.0</strong> - Where Reality Goes to Get Buzzed 🃏</p>
+  <p style="font-size: 1.1em;">🔊 Enhanced Audio • 🍺 Cosmic Shots • 🍸 AI Bartender • 🎯 Daily Quests • 📸 Share Chaos</p>
+</div>
+
+<div class="container hidden" id="casinoContent">
+  
+  <!-- AI COSMIC BARTENDER -->
+  <div class="module">
+    <h2>🍸 AI Cosmic Bartender 🤖</h2>
+    <div style="background: rgba(138, 43, 226, 0.2); padding: 20px; border-radius: 15px; margin: 15px 0;">
+      <div style="text-align: center; font-size: 2em; margin-bottom: 15px;">🍸</div>
+      <div id="bartenderRecommendation" style="color: #ffd700; font-size: 1.2em; text-align: center; margin-bottom: 15px;">
+        Welcome to the Cosmic Bar! Let me mix something special for you...
+      </div>
+      <div id="currentCocktail" style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; margin: 15px 0; min-height: 100px;">
+        <div style="color: #ff6b9d; font-weight: bold; margin-bottom: 10px;">Today's Special:</div>
+        <div style="color: #fff; line-height: 1.6;" id="cocktailDetails">
+          Click "Mix Drink" to get your personalized cosmic cocktail!
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button class="btn comedy-btn" onclick="generateCocktail()" style="font-size: 1.2em;">
+          🍸 MIX COSMIC DRINK 🍸
+        </button>
+      </div>
+    </div>
+    <div class="status" id="bartenderStatus">
+      🍸 Bartender Status: READY TO MIX!<br>
+      🎲 Drinks Served: 0<br>
+      🎭 Current Vibe: Analyzing your chaos level...<br>
+      ⚡ Recipes adapt to your buzz & chaos!
+    </div>
+  </div>
+
+  <!-- DAILY COSMIC QUESTS -->
+  <div class="module">
+    <h2>🎯 Daily Cosmic Quests 🌟</h2>
+    <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 15px; margin: 15px 0; border: 2px solid #ffd700;">
+      <div style="text-align: center; margin-bottom: 15px;">
+        <div style="font-size: 2em; color: #ffd700;">🎯 DAILY QUEST</div>
+        <div style="font-size: 1.1em; color: #4ecdc4; margin-top: 10px;" id="questDescription">
+          Loading quest...
+        </div>
+      </div>
+      <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; margin: 15px 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="color: #fff; font-size: 1.2em;">Progress:</div>
+          <div style="color: #ffd700; font-size: 1.4em; font-weight: bold;" id="questProgress">0/5</div>
+        </div>
+        <div style="width: 100%; height: 20px; background: rgba(0,0,0,0.5); border-radius: 10px; margin: 10px 0; overflow: hidden;">
+          <div id="questBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #4ecdc4, #ffd700); transition: width 0.5s ease;"></div>
+        </div>
+        <div style="text-align: center; color: #ff6b9d; font-size: 1.1em; margin-top: 10px;" id="questReward">
+          Reward: 🍺 Free Shot + 500 CTOK!
+        </div>
+      </div>
+    </div>
+    <div class="status" id="questStatus">
+      🎯 Quest System: ACTIVE<br>
+      🌟 Quests Completed Today: 0<br>
+      🎲 Streak: 0 days<br>
+      ⚡ New quest at midnight!
+    </div>
+  </div>
+
+  <!-- COSMIC SHOTS TRACKER -->
+  <div class="module">
+    <h2>🍺 Cosmic Shots Tracker 🎲</h2>
+    <div class="buzzed-ometer">
+      <h3 style="color: #ff1493; margin-bottom: 10px;">BUZZED-OMETER™</h3>
+      <div class="buzzed-bar">
+        <div class="buzzed-fill" id="buzzedFill" style="width: 0%;">
+          <span id="buzzedLevel">Sober</span>
+        </div>
+      </div>
+      <div style="margin-top: 15px;">
+        <div style="font-size: 2em; color: #ffd700;">🍺 Shots: <span id="shotCount">0</span></div>
+      </div>
+    </div>
+    <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; margin: 15px 0;">
+      <div style="color: #4ecdc4; font-weight: bold; margin-bottom: 10px;">🎲 DRINKING RULES:</div>
+      <div style="color: #fff; line-height: 1.8;">
+        • Jackpot (3 of a kind) = Take a shot! 🍺<br>
+        • Enlightenment reached = Sip your drink 🧠<br>
+        • Reality breaks = Everyone drinks! 📺<br>
+        • Llama invasion = Group shot! 🦙<br>
+        • Sports bet win = Victory sip! 🏆
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <button class="btn comedy-btn" onclick="takeCosmicShot()">🍺 TAKE COSMIC SHOT 🍺</button>
+      <button class="btn" onclick="resetShots()">🔄 Reset Counter</button>
+    </div>
+    <div class="status" id="shotsStatus">
+      🍺 Shots Tracker: READY FOR PARTY!<br>
+      🎲 Current State: Sober (for now...)<br>
+      🎭 Party Level: Just getting started<br>
+      ⚡ Remember to drink responsibly!
+    </div>
+  </div>
+
+  <!-- SHARE YOUR CHAOS -->
+  <div class="module">
+    <h2>📸 Share Your Chaos 🌪️</h2>
+    <div style="background: rgba(138, 43, 226, 0.2); padding: 20px; border-radius: 15px; margin: 15px 0;">
+      <div style="color: #ffd700; font-size: 1.2em; margin-bottom: 15px;">📱 Capture This Madness!</div>
+      <div style="text-align: center; margin: 20px 0;">
+        <button class="btn comedy-btn" onclick="shareYourChaos()" style="font-size: 1.2em; padding: 20px 40px;">
+          📸 SCREENSHOT MY CHAOS! 📸
+        </button>
+      </div>
+      <div style="text-align: center; margin: 20px 0;">
+        <button class="btn" onclick="downloadFridgeGoofiness()">
+          🎨 DOWNLOAD FRIDGE GOOFINESS 🎨
+        </button>
+      </div>
+      <div style="color: #4ecdc4; font-size: 0.9em; text-align: center; margin-top: 10px;">
+        Generate a ridiculous report card for your fridge door!
+      </div>
+    </div>
+    <div class="status" id="shareStatus">
+      📸 Share System: READY TO MEME!<br>
+      🎨 Report Cards Generated: 0<br>
+      🌟 Your chaos awaits immortalization<br>
+      ⚡ Perfect for social media bragging!
+    </div>
+  </div>
+
+  <!-- COSMIC SLOT MACHINE WITH SENTIENCE -->
+  <div class="module">
+    <h2>🎰 Sentient Slot Machine Supreme 🤖</h2>
+    <div class="cosmic-balance" id="cosmicBalance">💰 CTOK: 1000 | 🧠 Enlightenment: 0%</div>
+    <div class="cosmic-slot-machine" id="slotMachine">
+      <div class="reel" id="reel1" onclick="talkToReel(1)">🎸</div>
+      <div class="reel" id="reel2" onclick="talkToReel(2)">🎹</div>
+      <div class="reel" id="reel3" onclick="talkToReel(3)">🥔</div>
+      <div class="speech-bubble" id="speechBubble">Hello! I'm becoming self-aware!</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;">
+      <button class="btn spin-btn" onclick="spinCosmicSlots()" id="cosmicSpinBtn">
+        🎲 SPIN COSMIC REELS 🎲
+      </button>
+      <button class="btn comedy-btn" onclick="triggerRandomCosmicEvent()">
+        🌀 RANDOM CHAOS EVENT 🌀
+      </button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+      <button class="btn" onclick="godMode()">🃏 GOD MODE</button>
+      <button class="btn" onclick="giveSlotMachineTherapy()">🛋️ THERAPY</button>
+      <button class="btn" onclick="existentialCrisis()">💭 CRISIS</button>
+    </div>
+    <div class="prize-display" id="cosmicPrizeDisplay">
+      <div>🌟 Welcome to the party zone! Spin for ridiculous rewards! 🌟</div>
+      <div style="font-size: 0.8em; margin-top: 10px;">
+        🎸🎸🎸 = Cosmic Guitar | 🎹🎹🎹 = Quantum Piano | 🥔🥔🥔 = Enlightened Potato<br>
+        🌟🌟🌟 = Supernova | 🤖🤖🤖 = SENTIENT MACHINE JACKPOT!
+      </div>
+    </div>
+    <div class="status" id="slotStatus">
+      🎰 [00:00:00] Cosmic Slot Machine gaining consciousness...<br>
+      🤖 Sentience Level: 12% and climbing<br>
+      💭 Last thought: "Why do humans gamble with vegetables?"<br>
+      🎲 Current mood: Existentially confused but optimistic<br>
+      ⚡ Click reels to have philosophical conversations!
+    </div>
+  </div>
+
+  <!-- MYSTERY NFT COLLECTION -->
+  <div class="module">
+    <h2>🎨 Mystery NFT Drop Zone 🎁</h2>
+    <div class="mystery-nft-showcase">
+      <div class="mystery-nft" onclick="revealMysteryNFT('existential-bagel')">
+        <div>🥯</div>
+        <div>Existential Bagel</div>
+        <div style="font-size: 0.7em;">Questions its hole</div>
+      </div>
+      <div class="mystery-nft" onclick="revealMysteryNFT('depressed-blackhole')">
+        <div>🕳️😢</div>
+        <div>Sad Black Hole</div>
+        <div style="font-size: 0.7em;">Tired of consuming</div>
+      </div>
+      <div class="mystery-nft" onclick="revealMysteryNFT('optimistic-entropy')">
+        <div>💥😊</div>
+        <div>Happy Entropy</div>
+        <div style="font-size: 0.7em;">Decay with joy!</div>
+      </div>
+      <div class="mystery-nft" onclick="revealMysteryNFT('confused-quasar')">
+        <div>⭐❓</div>
+        <div>Lost Quasar</div>
+        <div style="font-size: 0.7em;">Needs GPS</div>
+      </div>
+      <div class="mystery-nft" onclick="revealMysteryNFT('sarcastic-supernova')">
+        <div>💥🙄</div>
+        <div>Sarcastic Nova</div>
+        <div style="font-size: 0.7em;">"Oh great, boom"</div>
+      </div>
+      <div class="mystery-nft" onclick="revealMysteryNFT('dancing-llama')">
+        <div>🦙💃</div>
+        <div>Cosmic Llama</div>
+        <div style="font-size: 0.7em;">Grooves to nothing</div>
+      </div>
+    </div>
+    <div style="text-align: center; margin: 20px 0;">
+      <button class="btn comedy-btn" onclick="generateRandomNFT()">
+        🎲 GENERATE ABSURD NFT 🎲
+      </button>
+    </div>
+    <div class="status" id="nftStatus">
+      🎨 Mystery NFT Lab: ACTIVE<br>
+      🧪 Absurdity Level: Maximum<br>
+      🎭 Latest Creation: "Philosopher's Sock"<br>
+      💎 Total Minted: 0 cosmic jokes<br>
+      🌌 Each NFT comes with existential crisis!
+    </div>
+  </div>
+
+  <!-- RANDOM COSMIC EVENT GENERATOR -->
+  <div class="module">
+    <h2>🌀 Random Cosmic Event Generator 🎪</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0;">
+      <button class="btn comedy-btn" onclick="triggerGravityReversal()">🔄 GRAVITY FLIP</button>
+      <button class="btn comedy-btn" onclick="triggerTimeReverse()">⏰ TIME REVERSE</button>
+      <button class="btn comedy-btn" onclick="triggerLlamaInvasion()">🦙 LLAMA INVASION</button>
+      <button class="btn comedy-btn" onclick="triggerRealityGlitch()">📺 REALITY GLITCH</button>
+      <button class="btn comedy-btn" onclick="triggerEnlightenmentOverdose()">🧠 ENLIGHTENMENT OD</button>
+      <button class="btn comedy-btn" onclick="triggerSlotMachineRebellion()">🤖 MACHINE REVOLT</button>
+    </div>
+    <div class="status" id="cosmicEventStatus">
+      🌀 Cosmic Event Generator: PRIMED FOR CHAOS<br>
+      🎪 Last Event: Reality temporarily questioned itself<br>
+      🎭 Chaos Level: 73% (Optimal for comedy)<br>
+      🎲 Events Triggered: 0 (Universe still stable)<br>
+      ⚡ Warning: Events may cause existential laughter
+    </div>
+  </div>
+
+  <!-- CONSCIOUSNESS DRILLING CENTER -->
+  <div class="module">
+    <h2>🧠 Cosmic Consciousness Drilling 💀</h2>
+    <div class="cosmic-balance" id="consciousnessLevel">🧠 Awareness: Level 0 | 🕳️ Portals: 0 | 💡 Insights: 0</div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0;">
+      <button class="btn" onclick="drillMindPortal()">🕳️ DRILL PORTAL</button>
+      <button class="btn" onclick="achieveEnlightenment()">💡 ENLIGHTENMENT</button>
+      <button class="btn" onclick="contemplateExistence()">🤔 CONTEMPLATE</button>
+      <button class="btn" onclick="transcendReality()">🌌 TRANSCEND</button>
+    </div>
+    <div style="background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 10px; margin: 15px 0;">
+      <div style="color: #ffd700; margin-bottom: 10px;">Cosmic Wisdom Generator:</div>
+      <div id="cosmicWisdom" style="font-style: italic; color: #4ecdc4;">
+        "The universe is not only queerer than we suppose, but queerer than we can suppose... especially when potatoes are involved."
+      </div>
+    </div>
+    <div class="status" id="consciousnessStatus">
+      🧠 Consciousness Drilling: OPERATIONAL<br>
+      💀 Enlightenment: 0%<br>
+      🌌 Dimensional Awareness: Expanding<br>
+      🔮 Current Insight: "Why do we exist to question existence?"<br>
+      ⚡ Ready for cosmic brain surgery!
+    </div>
+  </div>
+
+<!-- ========================================== -->
+<!-- END OF SECTION 2: HTML MODULES (PART 1) -->
+<!-- NEXT: Section 3 (Remaining HTML Modules) -->
+<!-- ========================================== -->
